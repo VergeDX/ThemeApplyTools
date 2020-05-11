@@ -97,7 +97,7 @@ class ThemeUtils {
      * @param callback       operation when after get HTTP request.
      */
     static void getThemeDownloadLinkAsync(Activity activity, String themeShareLink, Callback callback) {
-        String[] themeLinkSplit = themeShareLink.split("/detail/.*?");
+        String[] themeLinkSplit = themeShareLink.split("/detail/");
         if (themeLinkSplit.length != 2) {
             new MaterialAlertDialogBuilder(activity)
                     .setTitle("错误")
@@ -109,7 +109,7 @@ class ThemeUtils {
             return;
         }
 
-        String themeToken = themeLinkSplit[themeLinkSplit.length - 1];
+        String themeToken = themeLinkSplit[1].substring(0, 36);
 
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder().url(THEME_API_URL + themeToken + "?miuiUIVersion=V11").build();
