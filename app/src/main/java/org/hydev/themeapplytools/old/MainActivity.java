@@ -1,4 +1,4 @@
-package org.hydev.themeapplytools;
+package org.hydev.themeapplytools.old;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -20,6 +20,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.hydev.themeapplytools.R;
+import org.hydev.themeapplytools.utils.FileUtils;
+import org.hydev.themeapplytools.utils.ThemeShareDialogUtils;
+import org.hydev.themeapplytools.utils.ThemeUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String ME_COOLAPK_URL = "https://coolapk.com/u/506843";
     private static final String ICEBOX_COOLAPK_URL = "https://coolapk.com/apk/com.catchingnow.icebox";
 
-    static boolean applied = false;
+    public static boolean applied = false;
     private static String filePath = null;
 
     /**

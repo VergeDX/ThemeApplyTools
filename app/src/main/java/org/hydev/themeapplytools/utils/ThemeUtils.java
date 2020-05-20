@@ -1,13 +1,18 @@
-package org.hydev.themeapplytools;
+package org.hydev.themeapplytools.utils;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -26,8 +31,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
 
-class ThemeUtils {
+public class ThemeUtils {
     private static final String THEME_API_URL = "https://thm.market.xiaomi.com/thm/download/v2/";
+    private static final String EXAMPLE_THEME_LINK = "http://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa";
 
     /**
      * Apply a theme by send intent to system theme manager with theme file path,
@@ -35,7 +41,7 @@ class ThemeUtils {
      *
      * @param filePath mtz theme file absolute path.
      */
-    static void applyTheme(Activity activity, String filePath) {
+    public static void applyTheme(Activity activity, String filePath) {
         ApplicationInfo applicationInfo;
 
         try {
@@ -43,12 +49,10 @@ class ThemeUtils {
             applicationInfo = activity.getPackageManager().getApplicationInfo("com.android.thememanager", 0);
         } catch (PackageManager.NameNotFoundException e) {
             new MaterialAlertDialogBuilder(activity)
-                    .setTitle("错误")
+                    .setTitle("错误 ")
                     .setMessage("没有找到 MIUI 主题商店 \n" +
-                            "您可能不是 MIUI 系统 \n" +
-                            "或 MIUI 主题商店被卸载 \n" +
-                            "非 MIUI 系统无法使用本 app \n")
-                    .setNegativeButton("退出", (dialog, which) -> activity.finish())
+                            "您或许卸载了 MIUI 主题商店 ")
+                    .setNegativeButton("OK", null)
                     .show();
 
             return;
@@ -59,8 +63,7 @@ class ThemeUtils {
             new MaterialAlertDialogBuilder(activity)
                     .setTitle("警告")
                     .setMessage("MIUI 主题商店被禁用 \n" +
-                            "请启用 MIUI 主题商店 \n" +
-                            "以便继续应用主题 \n")
+                            "请手动启用 MIUI 主题商店 ")
                     .setNegativeButton("返回", null)
                     .setPositiveButton("启用", (dialog, which) -> {
                         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -84,8 +87,6 @@ class ThemeUtils {
 
         intent.putExtras(bundle);
         activity.startActivity(intent);
-
-        MainActivity.applied = true;
     }
 
     /**
@@ -96,14 +97,22 @@ class ThemeUtils {
      * @param themeShareLink MIUI theme share link.
      * @param callback       operation when after get HTTP request.
      */
-    static void getThemeDownloadLinkAsync(Activity activity, String themeShareLink, Callback callback) {
+    public static void getThemeDownloadLinkAsync(Activity activity, String themeShareLink, Callback callback) {
         String[] themeLinkSplit = themeShareLink.split("/detail/");
+
+        // Illegal input.
         if (themeLinkSplit.length != 2) {
             new MaterialAlertDialogBuilder(activity)
                     .setTitle("错误")
-                    .setMessage("请输入主题的分享链接，例如：\n" +
-                            "http://zhuti.xiaomi.com/detail/f02025cb-8f0e-44e0-b39a-653e46d84d42 \n")
-                    .setNegativeButton("OK", null)
+                    .setMessage("请输入主题的分享链接，例如：\n" + EXAMPLE_THEME_LINK)
+                    .setNegativeButton("返回", null)
+                    .setPositiveButton("复制", (dialog, which) -> {
+                        ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clipData = ClipData.newPlainText("ExampleUrl", EXAMPLE_THEME_LINK);
+                        clipboardManager.setPrimaryClip(clipData);
+
+                        Toast.makeText(activity, "已复制示例链接", Toast.LENGTH_SHORT).show();
+                    })
                     .show();
 
             return;
@@ -124,7 +133,7 @@ class ThemeUtils {
      * @param responseBody HTTP response result.
      * @return theme info Set(downloadUrl, fileHash, fileSize, fileName).
      */
-    static Map<String, String> getThemeInfo(ResponseBody responseBody) {
+    public static Map<String, String> getThemeInfo(ResponseBody responseBody) {
         try {
             JsonObject jsonObject = new Gson().fromJson(responseBody.string(), JsonObject.class);
             int apiCode = jsonObject.get("apiCode").getAsInt();
@@ -153,6 +162,14 @@ class ThemeUtils {
         } catch (IOException e) {
             e.printStackTrace();
             throw new AssertionError();
+        }
+    }
+
+    public static void darkMode(Activity activity) {
+        Configuration configuration = activity.getResources().getConfiguration();
+        int currentNightMode = configuration.uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
     }
 }

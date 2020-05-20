@@ -1,4 +1,4 @@
-package org.hydev.themeapplytools;
+package org.hydev.themeapplytools.utils;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,14 +6,16 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 
-class ThemeShareDialogUtils {
+import org.hydev.themeapplytools.R;
+
+public class ThemeShareDialogUtils {
     private static final String THEME_OFFICIAL_URL = "http://zhuti.xiaomi.com/";
     private static final String THEMES_TK_URL = "https://miuithemes.tk/";
     private static final String TECH_RUCHI_URL = "http://www.techrushi.com/";
     private static final String THEME_XIAOMIS_URL = "https://miuithemesxiaomis.blogspot.com/";
     private static final String XIAOMI_THEMEZ_URL = "https://www.miuithemez.com/";
 
-    static void init(Activity activity, View view) {
+    public static void init(Activity activity, View view) {
         Button officialStoreButton = view.findViewById(R.id.bt_officialStore);
         Button themesTKButton = view.findViewById(R.id.bt_themesTK);
         Button techruchiButton = view.findViewById(R.id.bt_techruchi);
@@ -27,7 +29,7 @@ class ThemeShareDialogUtils {
         themezButton.setOnClickListener(v -> openBrowser(activity, XIAOMI_THEMEZ_URL));
     }
 
-    static void openBrowser(Activity activity, final String URL) {
+    public static void openBrowser(Activity activity, final String URL) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
         activity.startActivity(intent);
     }
