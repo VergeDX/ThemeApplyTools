@@ -33,30 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="7dp"
-        android:text="(1.) 打开文件管理器,
-        \n\t\t\t\t\t复制主题文件至 SD 卡根目录,
-        \n\t\t\t\t\tSD 卡根目录即为 [内部储存设备]. "
-        android:textSize="17sp"
-        android:textStyle="bold" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mb_openFileManager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="7dp"
-        android:paddingHorizontal="17dp"
-        android:text="打开文件管理器"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:icon="@drawable/ic_folder_open_black_24dp"
-        app:iconGravity="textStart"
-        app:iconSize="17dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="7dp"
-        android:text="(2.) 点击按钮，选择你复制的主题. "
+        android:text="(1.) 点击按钮，选择你需要应用的主题. "
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -77,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="7dp"
-        android:text="(3.) 点击 “应用主题” 按钮. "
+        android:text="(2.) 点击 “应用主题” 按钮. "
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -93,4 +70,12 @@
         app:icon="@drawable/ic_settings_black_24dp"
         app:iconGravity="textStart"
         app:iconSize="17dp" />
+
+    <TextView
+        android:id="@+id/tv_filePath"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:textSize="17sp"
+        android:textStyle="bold" />
 </LinearLayout>
