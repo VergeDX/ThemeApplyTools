@@ -23,8 +23,8 @@ public class MainActivityNew extends AppCompatActivity {
 
         ThemeUtils.darkMode(this);
 
-        MaterialCardView mcv_appUsage = findViewById(R.id.mcv_appUsage);
-        mcv_appUsage.setOnClickListener(l -> {
+        MaterialCardView mcv_apply = findViewById(R.id.mcv_apply);
+        mcv_apply.setOnClickListener(l -> {
             Intent intent = new Intent(MainActivityNew.this, ApplyThemeActivity.class);
             startActivity(intent);
         });
