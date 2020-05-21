@@ -33,8 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="21dp"
-        android:layout_marginBottom="3dp"
-        android:padding="7dp"
+        android:padding="9dp"
         android:text="请在下方输入主题链接"
         android:textSize="17sp"
         android:textStyle="bold" />
@@ -44,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="21dp"
+        android:layout_marginVertical="9dp"
         android:layout_marginBottom="3dp"
         android:hint="MIUI 主题分享链接 / 文字">
 
@@ -67,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="21dp"
-        android:layout_marginVertical="7dp"
+        android:layout_marginVertical="9dp"
         app:cardCornerRadius="7dp"
         app:cardElevation="21dp">
 
