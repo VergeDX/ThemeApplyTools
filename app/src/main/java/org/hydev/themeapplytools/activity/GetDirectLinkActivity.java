@@ -75,9 +75,9 @@ public class GetDirectLinkActivity extends AppCompatActivity {
                         String finalFileHash = fileHash;
                         runOnUiThread(() -> new MaterialAlertDialogBuilder(GetDirectLinkActivity.this)
                                 .setTitle(fileName)
-                                .setMessage("文件大小：" + themeInfo.get("fileSize") + "\n" +
-                                        "下载链接：\n" + downloadUrl + "\n" +
-                                        "哈希值：" + finalFileHash)
+                                .setMessage("文件大小：" + themeInfo.get("fileSize") + "\n\n" +
+                                        "下载链接：\n" + downloadUrl + "\n\n" +
+                                        "哈希值：" + finalFileHash + "\n")
                                 .setNegativeButton("复制链接", (dialog, which) -> FileUtils.copyLink(GetDirectLinkActivity.this, downloadUrl))
                                 .setPositiveButton("直接下载", (dialog, which) -> FileUtils.systemDownload(GetDirectLinkActivity.this, themeInfo))
                                 .show());
