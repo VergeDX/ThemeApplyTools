@@ -1,6 +1,5 @@
 package org.hydev.themeapplytools.activity
 
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -9,11 +8,9 @@ import okhttp3.Callback
 import okhttp3.Response
 import org.hydev.themeapplytools.databinding.ActivityGetDirectLinkBinding
 import org.hydev.themeapplytools.databinding.DialogThemeShareBinding
-import org.hydev.themeapplytools.utils.FileUtils
+import org.hydev.themeapplytools.utils.*
 import org.hydev.themeapplytools.utils.FileUtils.alert
 import org.hydev.themeapplytools.utils.FileUtils.alertInfo
-import org.hydev.themeapplytools.utils.ThemeShareDialogUtils
-import org.hydev.themeapplytools.utils.ThemeUtils
 import java.io.IOException
 
 class GetDirectLinkActivity : AppCompatActivity() {
@@ -36,40 +33,38 @@ class GetDirectLinkActivity : AppCompatActivity() {
 
             if (themeLinkSplit.size != 2) {
                 alert(this, "错误", "请输入主题的分享链接，例如：\n$EXAMPLE_THEME_LINK")
-                    .setNegativeButton("返回", null)
-                    .setPositiveButton("复制") { _: DialogInterface?, _: Int -> FileUtils.copyLink(this, EXAMPLE_THEME_LINK) }
-                    .show()
+                    .negative("返回") {}
+                    .positive("复制") { FileUtils.copyLink(this, EXAMPLE_THEME_LINK) }
+                    .show(self)
 
                 return@setOnClickListener
             }
 
             // Download
             ThemeUtils.getThemeDownloadLinkAsync(inputShareLink, object : Callback {
-                override fun onFailure(call: Call, e: IOException) { alertInfo(self, "错误", "获取直链失败,\n请检查网络连接后重试.") }
+                override fun onFailure(call: Call, e: IOException) {
+                    alertInfo(self, "错误", "获取直链失败,\n请检查网络连接后重试.")
+                }
 
                 override fun onResponse(call: Call, response: Response) {
                     val info = ThemeUtils.getThemeInfo(response.body)
 
-                    if (info == null) { alertInfo(self, "失败", "获取主题信息失败,\n可能是链接输入错误\n(在国外的话好像不能获取).") }
+                    if (info == null) alertInfo(self, "失败", "获取主题信息失败,\n可能是链接输入错误\n(在国外的话好像不能获取).")
                     else {
-                        val downloadUrl = info.getDownloadUrl()
+                        val url = info.getDownloadUrl()
 
-                        runOnUiThread {
-                            MaterialAlertDialogBuilder(self)
-                                .setTitle(info.getFileName())
-                                .setMessage("""
-                                    文件大小：${info.getFileSize()}
-                                    
-                                    下载链接：
-                                    $downloadUrl
-                                    
-                                    哈希值：${info.getFileHash()}
-                                    
-                                    """.trimIndent())
-                                .setNegativeButton("复制链接") { dialog: DialogInterface?, which: Int -> FileUtils.copyLink(self, downloadUrl) }
-                                .setPositiveButton("直接下载") { dialog: DialogInterface?, which: Int -> FileUtils.systemDownload(self, info) }
-                                .show()
-                        }
+                        alert(self, info.getFileName(), """
+                                文件大小：${info.getFileSize()}
+                                
+                                下载链接：
+                                $url
+                                
+                                哈希值：${info.getFileHash()}
+                                
+                                """)
+                            .negative("复制链接") { FileUtils.copyLink(self, url) }
+                            .positive("直接下载") { FileUtils.systemDownload(self, info) }
+                            .show(self)
                     }
                 }
             })
