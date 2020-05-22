@@ -56,7 +56,7 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="9dp"
         app:cardCornerRadius="7dp"
-        app:cardElevation="21dp">
+        app:cardElevation="4dp">
 
         <TextView
             android:padding="13dp"
