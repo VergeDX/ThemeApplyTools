@@ -20,7 +20,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="7dp"
         android:text="@string/step_1"
         android:textSize="17sp"
         android:textStyle="bold" />
@@ -30,18 +29,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
-        android:paddingHorizontal="17dp"
         android:text="@string/select_file"
         android:textSize="15sp"
         android:textStyle="bold"
         app:icon="@drawable/ic_insert_drive_file_black_24dp"
-        app:iconGravity="textStart"
         app:iconSize="17dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="7dp"
         android:text="@string/step_2"
         android:textSize="17sp"
         android:textStyle="bold" />
@@ -51,12 +47,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
-        android:paddingHorizontal="17dp"
         android:text="@string/apply_theme"
         android:textSize="15sp"
         android:textStyle="bold"
         app:icon="@drawable/ic_settings_black_24dp"
-        app:iconGravity="textStart"
         app:iconSize="17dp" />
 
     <TextView
