@@ -38,34 +38,31 @@ object ThemeUtils {
         val applicationInfo: ApplicationInfo = try {
             // If theme manager not exist.
             activity.packageManager.getApplicationInfo("com.android.thememanager", 0)
-        } catch (e: PackageManager.NameNotFoundException) {
+        }
+        catch (e: PackageManager.NameNotFoundException) {
             MaterialAlertDialogBuilder(activity)
-                    .setTitle("错误 ")
-                    .setMessage("""
-                        没有找到 MIUI 主题商店 
-                        您或许卸载了 MIUI 主题商店 
-                        """.trimIndent())
-                    .setNegativeButton("OK", null)
-                    .show()
+                .setTitle("错误 ")
+                .setMessage("""
+                    没有找到 MIUI 主题商店 
+                    您或许卸载了 MIUI 主题商店""".trimIndent())
+                .setNegativeButton("OK", null).show()
             return false
         }
 
         // If theme manager not enable.
         if (!applicationInfo.enabled) {
             MaterialAlertDialogBuilder(activity)
-                    .setTitle("警告")
-                    .setMessage("""
-                        MIUI 主题商店被禁用 
-                        请手动启用 MIUI 主题商店 
-                        """.trimIndent())
-                    .setNegativeButton("返回", null)
-                    .setPositiveButton("启用") { dialog: DialogInterface, which: Int ->
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        intent.data = Uri.parse("package:com.android.thememanager")
-                        activity.startActivity(intent)
-                        Toast.makeText(activity, "请点击下方的 “启用”", Toast.LENGTH_LONG).show()
-                    }
-                    .show()
+                .setTitle("警告")
+                .setMessage("""
+                    MIUI 主题商店被禁用 
+                    请手动启用 MIUI 主题商店""".trimIndent())
+                .setNegativeButton("返回", null)
+                .setPositiveButton("启用") { _: DialogInterface, _: Int ->
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    intent.data = Uri.parse("package:com.android.thememanager")
+                    activity.startActivity(intent)
+                    Toast.makeText(activity, "请点击下方的 “启用”", Toast.LENGTH_LONG).show()
+                }.show()
             return false
         }
 
@@ -127,7 +124,8 @@ object ThemeUtils {
 
             // 0 is OK, -1 is error.
             return if (theme.apiCode == 0) theme.apiData else null
-        } catch (e: IOException) {
+        }
+        catch (e: IOException) {
             e.printStackTrace()
             throw AssertionError()
         }

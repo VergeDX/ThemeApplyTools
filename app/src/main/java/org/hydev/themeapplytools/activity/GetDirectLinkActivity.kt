@@ -1,11 +1,7 @@
 package org.hydev.themeapplytools.activity
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import okhttp3.Call
@@ -18,10 +14,8 @@ import org.hydev.themeapplytools.utils.ThemeShareDialogUtils
 import org.hydev.themeapplytools.utils.ThemeUtils
 import java.io.IOException
 
-class GetDirectLinkActivity : AppCompatActivity()
-{
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+class GetDirectLinkActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val activityGetDirectLinkBinding = ActivityGetDirectLinkBinding.inflate(layoutInflater)
@@ -34,8 +28,7 @@ class GetDirectLinkActivity : AppCompatActivity()
             val inputShareLink = activityGetDirectLinkBinding.tilInputThemeLink.editText!!.text.toString()
             val themeLinkSplit = inputShareLink.split("/detail/")
 
-            if (themeLinkSplit.size != 2)
-            {
+            if (themeLinkSplit.size != 2) {
                 MaterialAlertDialogBuilder(this)
                     .setTitle("错误")
                     .setMessage("请输入主题的分享链接，例如：\n$EXAMPLE_THEME_LINK")
@@ -49,41 +42,35 @@ class GetDirectLinkActivity : AppCompatActivity()
                     .show()
                 return@setOnClickListener
             }
-            ThemeUtils.getThemeDownloadLinkAsync(inputShareLink, object : Callback
-            {
-                override fun onFailure(call: Call, e: IOException)
-                {
+
+            // Download
+            ThemeUtils.getThemeDownloadLinkAsync(inputShareLink, object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
                     runOnUiThread {
                         MaterialAlertDialogBuilder(this@GetDirectLinkActivity)
                             .setTitle("错误")
                             .setMessage("""
                                 获取直链失败, 
-                                请检查网络连接后重试. 
-                                """.trimIndent())
-                            .setNegativeButton("OK", null)
-                            .show()
+                                请检查网络连接后重试.""".trimIndent())
+                            .setNegativeButton("OK", null).show()
                     }
                 }
 
-                override fun onResponse(call: Call, response: Response)
-                {
+                override fun onResponse(call: Call, response: Response) {
                     val info = ThemeUtils.getThemeInfo(response.body)
 
                     // Cannot get theme info, maybe link is wrong.
-                    if (info == null)
-                    {
+                    if (info == null) {
                         runOnUiThread {
                             MaterialAlertDialogBuilder(this@GetDirectLinkActivity)
                                 .setTitle("失败")
                                 .setMessage("""
                                     获取主题信息失败 
-                                    可能是链接输入错误 
-                                    """.trimIndent())
+                                    可能是链接输入错误""".trimIndent())
                                 .setNegativeButton("OK", null).show()
                         }
                     }
-                    else
-                    {
+                    else {
                         val downloadUrl = info.getDownloadUrl()
 
                         runOnUiThread {

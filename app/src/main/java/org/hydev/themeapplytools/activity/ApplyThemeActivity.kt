@@ -11,13 +11,11 @@ import com.google.android.material.snackbar.Snackbar
 import org.hydev.themeapplytools.databinding.ActivityApplyThemeBinding
 import org.hydev.themeapplytools.utils.ThemeUtils
 
-class ApplyThemeActivity : AppCompatActivity()
-{
+class ApplyThemeActivity : AppCompatActivity() {
     // Lateinit means that it is not assigned when the object is created
     lateinit var activityApplyThemeBinding: ActivityApplyThemeBinding
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         activityApplyThemeBinding = ActivityApplyThemeBinding.inflate(layoutInflater)
@@ -45,8 +43,7 @@ class ApplyThemeActivity : AppCompatActivity()
                 Snackbar.make(l!!, " ! 你选择的不是主题（mtz）文件 ! ", Snackbar.LENGTH_LONG).show()
             }
             else {
-                if (ThemeUtils.applyTheme(this, filePath))
-                {
+                if (ThemeUtils.applyTheme(this, filePath)) {
                     MaterialAlertDialogBuilder(this)
                         .setTitle("完成")
                         .setMessage("""
@@ -68,31 +65,26 @@ class ApplyThemeActivity : AppCompatActivity()
      * @param requestCode is always 7.
      * @param data        contains user chosen file Uri.
      */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-    {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 7 && resultCode == Activity.RESULT_OK)
-        {
+        if (requestCode == 7 && resultCode == Activity.RESULT_OK) {
             val path = data?.data?.path
 
             // Build the absolutely path of theme file.
             val filePathSpiltArray = path!!.split(":".toRegex()).toTypedArray()
             val filePathSpilt = path.substring(filePathSpiltArray[0].length + 1)
             filePath = Environment.getExternalStorageDirectory().path + "/" + filePathSpilt
-            if (!path.endsWith(".mtz"))
-            {
+            if (!path.endsWith(".mtz")) {
                 activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$filePath\n\n ! 但它不是主题（mtz）文件 ! "
             }
-            else
-            {
+            else {
                 activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$filePath"
             }
         }
     }
 
-    companion object
-    {
+    companion object {
         private var filePath: String? = null
     }
 }
