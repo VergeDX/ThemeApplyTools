@@ -52,6 +52,6 @@ object FileUtils {
      * Show info alert
      */
     fun alertInfo(activity: Activity, title: String, message: String) {
-        alert(activity, title, message).setPositiveButton("OK", null).show()
+        activity.runOnUiThread { alert(activity, title, message).setPositiveButton("OK", null).show() }
     }
 }
