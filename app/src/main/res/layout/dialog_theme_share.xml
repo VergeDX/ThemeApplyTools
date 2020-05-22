@@ -27,11 +27,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="7sp" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_officialStore"
         android:layout_width="match_parent"
