@@ -1,29 +1,49 @@
 <resources>
     <string name="app_name">MIUI 主题工具</string>
-    <string name="usage">使用说明：\n<b>[1.] 打开文件管理器，复制主题文件至 SD 卡根目录.\n\t（SD 卡根目录即为 “内部储存设备”）</b>\n[2.] 点击按钮，选择你复制的主题.\n[3.] 点击 “应用主题” 按钮.</string>
-    <string name="open_fileManager">1. 打开文件管理器</string>
-    <string name="choose_file">2. 选择文件</string>
-    <string name="apply_theme">3. 应用主题</string>
-    <string name="not_mtz_file">你选择的不是主题（mtz）文件</string>
-    <string name="ensure_mtz">请确保该文件在根目录下，否则无效</string>
-    <string name="no_Choose_File">未选择有效文件，请先选择文件</string>
-    <string name="getThemeDownloadLink">主题下载直链获取</string>
-    <string name="themeShareLink">MIUI 主题分享链接</string>
-    <string name="bt_getThemeDownloadLink">获取信息 / 下载文件</string>
-    <string name="themeWebsite">主题资源分享</string>
-    <string name="warning_vpn">警告：大部分站点需要爬墙</string>
-    <string name="officialThemeStore">小米主题商店</string>
-    <string name="miuithemes_tk">MIUIThemes.TK</string>
+
+    <string name="apply_theme">应用主题</string>
+    <string name="get_direct_link">提取直链</string>
+    <string name="app_how">App 原理</string>
+    <string name="github_src">GitHub 开源</string>
+    <string name="coolapk_me">酷安 @Yaong</string>
+
+    <string name="how_to_use">使用步骤</string>
+    <string name="step_1">(1.) 点击按钮，选择你需要应用的主题. </string>
+    <string name="select_file">选择文件</string>
+    <string name="step_2">(2.) 点击 \"应用主题\" 按钮. </string>
+    <!-- string name = "apply_theme" -->
+
+    <!-- string name = "get_direct_link" -->
+    <string name="please_input_theme_link_below">请在下方输入主题链接</string>
+    <string name="miui_theme_link_or_text">MIUI 主题分享链接 / 文字</string>
+    <string name="get_info_or_download_file">获取信息 / 下载文件</string>
+    <string name="theme_share_site">主题分享站</string>
+    <string name="warning_about_vpn">（警告：大部分站点需要爬墙）</string>
+
+    <!-- string name = "app_how" -->
+    <string name="app_how_it_works">
+        * 关于应用主题：
+        \n在 MIUI 主题商店中，官方预留了一个接口
+        \n用于主题设计师测试主题，它可应用任意主题
+        \n本 App 的则利用了这一接口，向其发送请求
+        \n从而达到应用三方主题的目的
+
+        \n\n * 关于提取直链：
+        \n以下面的主题链接为例
+        \nhttp://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa
+        \n其中，/detal/ 后方的字符为主题 Token
+        \n只需向如下官方 API 发起请求
+        \nhttps://thm.market.xiaomi.com/thm/download/v2
+        \n在其后面带上主题 Token 与特定参数
+        \n其返回的 JSON 中就存在主题下载链接
+
+        \n\n * 下面是一个例子：
+        \nhttps://thm.market.xiaomi.com/thm/download/v2/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa?miuiUIVersion=V11
+    </string>
+
+    <string name="official_theme_store">小米主题商店</string>
+    <string name="miui_themes_tk">MIUIThemes.TK</string>
     <string name="techruchi_com">techruchi.com</string>
     <string name="miui_themes_xiaomis">MIUI Themes Xiaomis</string>
     <string name="miui_themez">Miui Themez</string>
-    <string name="ifDefault">若出现主题恢复默认的情况，\n可先卸载 “主题商店” 的更新，\n再先按上方的步骤重新应用主题，\n并使用 “冰箱” 一类的 app 冻结 “主题商店”</string>
-    <string name="iceboxCoolapk">酷安 “冰箱” app</string>
-    <string name="adv_usage">你也可以在下方手动输入主题文件的位置.（手动应用）</string>
-    <string name="theme_path">[手动] 主题文件路径</string>
-    <string name="adv_Apply">[手动] 应用</string>
-    <string name="input_isEmpty">路径为空或不是主题（mtz）文件</string>
-    <string name="github_openSource">GitHub 开源</string>
-    <string name="app_howWorking">App 原理</string>
-    <string name="coolapk_me">酷安 @Yaong</string>
 </resources>

@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginHorizontal="7dp"
-            android:text="App 原理"
+            android:text="@string/app_how"
             android:textSize="19sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -34,21 +34,7 @@
         android:autoLink="all"
         android:lineSpacingExtra="3sp"
         android:padding="7dp"
-        android:text="* 关于应用主题：
-        \n在 MIUI 主题商店中，官方预留了一个接口
-        \n用于主题设计师测试主题，它可应用任意主题
-        \n本 App 的则利用了这一接口，向其发送请求
-        \n从而达到应用三方主题的目的
-        \n\n* 关于提取直链：
-        \n以下面的主题链接为例
-        \nhttp://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa
-        \n其中，/detal/ 后方的字符为主题 Token
-        \n只需向如下官方 API 发起请求
-        \nhttps://thm.market.xiaomi.com/thm/download/v2
-        \n在其后面带上主题 Token 与特定参数
-        \n其返回的 JSON 中就存在主题下载链接
-        \n\n* 下面是一个例子：
-        \nhttps://thm.market.xiaomi.com/thm/download/v2/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa?miuiUIVersion=V11"
+        android:text="@string/app_how_it_works"
         android:textSize="15sp"
         android:textStyle="bold" />
 </LinearLayout>

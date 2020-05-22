@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="13dp"
-                android:text="应用主题"
+                android:text="@string/apply_theme"
                 android:textSize="19sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="13dp"
-                android:text="提取直链"
+                android:text="@string/get_direct_link"
                 android:textSize="19sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="13dp"
-                android:text="App 原理"
+                android:text="@string/app_how"
                 android:textSize="19sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -146,7 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="13dp"
-                android:text="GitHub 开源"
+                android:text="@string/github_src"
                 android:textSize="19sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -177,7 +177,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="13dp"
-                android:text="酷安 \@Yaong"
+                android:text="@string/coolapk_me"
                 android:textSize="19sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

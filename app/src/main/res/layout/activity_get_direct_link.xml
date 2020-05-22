@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginHorizontal="7dp"
-            android:text="提取直链"
+            android:text="@string/get_direct_link"
             android:textSize="19sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="21dp"
         android:padding="9dp"
-        android:text="请在下方输入主题链接"
+        android:text="@string/please_input_theme_link_below"
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -45,7 +45,7 @@
         android:layout_marginHorizontal="21dp"
         android:layout_marginVertical="9dp"
         android:layout_marginBottom="3dp"
-        android:hint="MIUI 主题分享链接 / 文字">
+        android:hint="@string/miui_theme_link_or_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="21dp"
-        android:text="获取信息 / 下载文件"
+        android:text="@string/get_info_or_download_file"
         app:icon="@drawable/ic_file_download_black_24dp"
         app:iconGravity="textStart" />
 
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="13dp"
-                android:text="主题分享站"
+                android:text="@string/theme_share_site"
                 android:textSize="19sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -109,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="7dp"
-            android:text="（警告：大部分站点需要爬墙）"
+            android:text="@string/warning_about_vpn"
             android:textSize="17sp"
             android:textStyle="bold" />
     </LinearLayout>

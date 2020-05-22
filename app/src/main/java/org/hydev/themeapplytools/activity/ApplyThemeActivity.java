@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import org.hydev.themeapplytools.R;
 import org.hydev.themeapplytools.databinding.ActivityApplyThemeBinding;
 import org.hydev.themeapplytools.utils.FileUtils;
 import org.hydev.themeapplytools.utils.ThemeUtils;
@@ -35,7 +34,7 @@ public class ApplyThemeActivity extends AppCompatActivity {
 
         activityApplyThemeBinding.mbApplyTheme.setOnClickListener(l -> {
             if (filePath == null) {
-                Snackbar.make(l, R.string.no_Choose_File, Snackbar.LENGTH_LONG)
+                Snackbar.make(l, "未选择有效文件，请先选择文件", Snackbar.LENGTH_LONG)
                         .show();
             } else {
                 ThemeUtils.applyTheme(this, filePath);
@@ -63,7 +62,7 @@ public class ApplyThemeActivity extends AppCompatActivity {
                 if (cursor != null && cursor.moveToFirst()) {
                     String fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                     if (!fileName.endsWith(".mtz")) {
-                        Snackbar.make(activityApplyThemeBinding.getRoot(), R.string.not_mtz_file, Snackbar.LENGTH_LONG)
+                        Snackbar.make(activityApplyThemeBinding.getRoot(), "你选择的不是主题（mtz）文件", Snackbar.LENGTH_LONG)
                                 .show();
                         fileName = null;
                     }

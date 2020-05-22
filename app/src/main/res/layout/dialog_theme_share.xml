@@ -36,14 +36,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:text="@string/officialThemeStore" />
+        android:text="@string/official_theme_store" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_themesTK"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:text="@string/miuithemes_tk"
+        android:text="@string/miui_themes_tk"
         android:textAllCaps="false" />
 
     <com.google.android.material.button.MaterialButton
