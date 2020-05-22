@@ -2,7 +2,6 @@ package org.hydev.themeapplytools.utils
 
 import android.app.Activity
 import android.content.ComponentName
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -12,7 +11,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration.Companion.Stable
@@ -20,7 +18,8 @@ import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.ResponseBody
-import java.io.IOException
+import org.hydev.themeapplytools.utils.FileUtils.alert
+import org.hydev.themeapplytools.utils.FileUtils.alertInfo
 import java.net.URLDecoder
 import java.util.*
 
@@ -35,34 +34,25 @@ object ThemeUtils {
      * @return true if successful.
      */
     fun applyTheme(activity: Activity, filePath: String?): Boolean {
+        // If theme manager exists.
         val applicationInfo: ApplicationInfo = try {
-            // If theme manager not exist.
             activity.packageManager.getApplicationInfo("com.android.thememanager", 0)
         }
         catch (e: PackageManager.NameNotFoundException) {
-            MaterialAlertDialogBuilder(activity)
-                .setTitle("错误 ")
-                .setMessage("""
-                    没有找到 MIUI 主题商店 
-                    您或许卸载了 MIUI 主题商店""".trimIndent())
-                .setNegativeButton("OK", null).show()
+            alertInfo(activity, "错误", "没有找到 MIUI 主题商店\n您或许卸载了 MIUI 主题商店")
             return false
         }
 
-        // If theme manager not enable.
+        // If theme manager is not enabled.
         if (!applicationInfo.enabled) {
-            MaterialAlertDialogBuilder(activity)
-                .setTitle("警告")
-                .setMessage("""
-                    MIUI 主题商店被禁用 
-                    请手动启用 MIUI 主题商店""".trimIndent())
-                .setNegativeButton("返回", null)
-                .setPositiveButton("启用") { _: DialogInterface, _: Int ->
+            alert(activity, "警告", "MIUI 主题商店被禁用\n请手动启用 MIUI 主题商店")
+                .negative("返回") {}
+                .positive("启用") {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     intent.data = Uri.parse("package:com.android.thememanager")
                     activity.startActivity(intent)
                     Toast.makeText(activity, "请点击下方的 “启用”", Toast.LENGTH_LONG).show()
-                }.show()
+                }.show(activity)
             return false
         }
 
@@ -118,17 +108,11 @@ object ThemeUtils {
      * @return theme info Set(downloadUrl, fileHash, fileSize, fileName).
      */
     fun getThemeInfo(responseBody: ResponseBody?): MiuiThemeData? {
-        try {
-            if (responseBody == null) return null
-            val theme = Json(Stable).parse(MiuiTheme.serializer(), responseBody.string())
+        if (responseBody == null) return null
+        val theme = Json(Stable).parse(MiuiTheme.serializer(), responseBody.string())
 
-            // 0 is OK, -1 is error.
-            return if (theme.apiCode == 0) theme.apiData else null
-        }
-        catch (e: IOException) {
-            e.printStackTrace()
-            throw AssertionError()
-        }
+        // 0 is OK, -1 is error.
+        return if (theme.apiCode == 0) theme.apiData else null
     }
 
     /**
