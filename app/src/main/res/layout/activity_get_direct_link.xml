@@ -5,29 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:drawableStart="@drawable/ic_insert_link_black_24dp"
+        android:drawablePadding="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="21dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="3dp"
-            android:src="@drawable/ic_insert_link_black_24dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="7dp"
-            android:text="@string/get_direct_link"
-            android:textSize="19sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:layout_marginBottom="9dp"
+        android:text="@string/get_direct_link"
+        android:textSize="19sp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
@@ -84,23 +72,13 @@
             android:textStyle="bold" />
     </com.google.android.material.card.MaterialCardView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="27dp"
-        android:padding="9dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_warning_black_24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="7dp"
-            android:text="@string/warning_about_vpn"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:text="@string/warning_about_vpn"
+        android:textSize="17sp"
+        android:padding="9dp"
+        android:textStyle="bold"
+        android:drawableStart="@drawable/ic_warning_black_24dp" />
 </LinearLayout>
