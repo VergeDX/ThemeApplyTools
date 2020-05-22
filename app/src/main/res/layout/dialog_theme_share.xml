@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="24dp">
 
     <TextView
         android:drawableStart="@drawable/ic_public_black_24dp"
@@ -18,14 +19,12 @@
         android:id="@+id/bt_officialStore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
         android:text="@string/official_theme_store" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_themesTK"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
         android:text="@string/miui_themes_tk"
         android:textAllCaps="false" />
 
@@ -33,7 +32,6 @@
         android:id="@+id/bt_techruchi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
         android:text="@string/techruchi_com"
         android:textAllCaps="false" />
 
@@ -41,7 +39,6 @@
         android:id="@+id/bt_themeXiaomis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
         android:text="@string/miui_themes_xiaomis"
         android:textAllCaps="false" />
 
@@ -49,8 +46,6 @@
         android:id="@+id/bt_themez"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
         android:text="@string/miui_themez"
         android:textAllCaps="false" />
-
 </LinearLayout>
