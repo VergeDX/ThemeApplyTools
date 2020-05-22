@@ -108,11 +108,12 @@ object ThemeUtils {
      * @return theme info Set(downloadUrl, fileHash, fileSize, fileName).
      */
     fun getThemeInfo(responseBody: ResponseBody?): MiuiThemeData? {
-        if (responseBody == null) return null
-        val theme = Json(Stable).parse(MiuiTheme.serializer(), responseBody.string())
-
-        // 0 is OK, -1 is error.
-        return if (theme.apiCode == 0) theme.apiData else null
+        return try {
+            Json(Stable).parse(MiuiTheme.serializer(), responseBody!!.string()).apiData
+        }
+        catch (e: Exception) {
+            null
+        }
     }
 
     /**
