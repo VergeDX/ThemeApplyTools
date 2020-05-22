@@ -2,6 +2,7 @@ package org.hydev.themeapplytools.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.content.Intent.EXTRA_LOCAL_ONLY
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +30,7 @@ class ApplyThemeActivity : AppCompatActivity() {
 
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.type = "*/*"
+            intent.putExtra(EXTRA_LOCAL_ONLY, true)
 
             // It will call onActivityResult method, 7 is requestCode that distinguish request.
             startActivityForResult(intent, 7)
