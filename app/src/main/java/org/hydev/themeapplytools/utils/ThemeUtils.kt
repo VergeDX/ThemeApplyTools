@@ -68,9 +68,11 @@ object ThemeUtils {
                     .show()
             return false
         }
+
         val intent = Intent("android.intent.action.MAIN")
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.component = ComponentName("com.android.thememanager", "com.android.thememanager.ApplyThemeForScreenshot")
+
         val bundle = Bundle()
         bundle.putString("theme_file_path", filePath)
         bundle.putString("api_called_from", "test")
@@ -88,12 +90,9 @@ object ThemeUtils {
      * @param callback       operation when after get HTTP request.
      */
     fun getThemeDownloadLinkAsync(themeShareLink: String, callback: Callback) {
-        val themeLinkSplit = themeShareLink.split("/detail/".toRegex()).toTypedArray()
-        val themeToken = themeLinkSplit[1].substring(0, 36)
-        val okHttpClient = OkHttpClient()
+        val themeToken = themeShareLink.split("/detail/".toRegex())[1].substring(0, 36)
         val request = Request.Builder().url("$THEME_API_URL$themeToken?miuiUIVersion=V11").build()
-        val call = okHttpClient.newCall(request)
-        call.enqueue(callback)
+        OkHttpClient().newCall(request).enqueue(callback)
     }
 
     /**
@@ -115,7 +114,8 @@ object ThemeUtils {
 
     /**
      * Parse MIUI theme API response, generate a theme info Set.
-     * example JSON can get here: https://thm.market.xiaomi.com/thm/download/v2/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa?miuiUIVersion=V11
+     * example JSON can get here:
+     * https://thm.market.xiaomi.com/thm/download/v2/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa?miuiUIVersion=V11
      *
      * @param responseBody HTTP response result.
      * @return theme info Set(downloadUrl, fileHash, fileSize, fileName).
