@@ -4,28 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:drawableStart="@drawable/ic_public_black_24dp"
+        android:drawablePadding="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="7dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:src="@drawable/ic_public_black_24dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="13dp"
-            android:text="主题分享站"
-            android:textSize="19sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:layout_marginBottom="18dp"
+        android:text="主题分享站"
+        android:textSize="19sp"
+        android:textStyle="bold" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_officialStore"
