@@ -3,10 +3,10 @@ package org.hydev.themeapplytools.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import droidninja.filepicker.utils.ContentUriUtils
 import org.hydev.themeapplytools.databinding.ActivityApplyThemeBinding
 import org.hydev.themeapplytools.utils.FileUtils.alertInfo
 import org.hydev.themeapplytools.utils.ThemeUtils
@@ -14,6 +14,7 @@ import org.hydev.themeapplytools.utils.ThemeUtils
 class ApplyThemeActivity : AppCompatActivity() {
     // Lateinit means that it is not assigned when the object is created
     lateinit var activityApplyThemeBinding: ActivityApplyThemeBinding
+    var filePath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,23 +64,13 @@ class ApplyThemeActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 7 && resultCode == Activity.RESULT_OK) {
-            val path = data?.data?.path
+        try {
+            if (requestCode == 7 && resultCode == Activity.RESULT_OK) {
+                val path = ContentUriUtils.getFilePath(this, data?.data!!)
 
-            // Build the absolutely path of theme file.
-            val filePathSpiltArray = path!!.split(":".toRegex()).toTypedArray()
-            val filePathSpilt = path.substring(filePathSpiltArray[0].length + 1)
-            filePath = Environment.getExternalStorageDirectory().path + "/" + filePathSpilt
-            if (!path.endsWith(".mtz")) {
-                activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$filePath\n\n ! 但它不是主题（mtz）文件 ! "
+                activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$filePath" +
+                    if (!path!!.endsWith(".mtz")) "\n\n ! 但它不是主题（mtz）文件 ! " else ""
             }
-            else {
-                activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$filePath"
-            }
-        }
-    }
-
-    companion object {
-        private var filePath: String? = null
+        } catch (e: NullPointerException) {}
     }
 }
