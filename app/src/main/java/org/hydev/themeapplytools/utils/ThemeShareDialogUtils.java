@@ -13,7 +13,7 @@ public class ThemeShareDialogUtils {
     private static final String THEME_XIAOMIS_URL = "https://miuithemesxiaomis.blogspot.com/";
     private static final String XIAOMI_THEMEZ_URL = "https://www.miuithemez.com/";
 
-    public static void init(Activity activity, DialogThemeShareBinding dialogThemeShareBinding) {
+    public static void setOnClickListener(Activity activity, DialogThemeShareBinding dialogThemeShareBinding) {
         dialogThemeShareBinding.btOfficialStore.setOnClickListener(v -> openBrowser(activity, THEME_OFFICIAL_URL));
         dialogThemeShareBinding.btThemesTK.setOnClickListener(v -> openBrowser(activity, THEMES_TK_URL));
         dialogThemeShareBinding.btTechruchi.setOnClickListener(v -> openBrowser(activity, TECH_RUCHI_URL));

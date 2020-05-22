@@ -5,7 +5,6 @@ import android.app.DownloadManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.widget.Toast;
@@ -48,15 +47,5 @@ public class FileUtils {
 
         downloadManager.enqueue(request);
         Toast.makeText(activity, "已开始下载", Toast.LENGTH_LONG).show();
-    }
-
-    /**
-     * Start a choose file activity and return to onActivityResult.
-     */
-    public static void chooseFile(Activity activity) {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
-        activity.startActivityForResult(intent, 7);
     }
 }

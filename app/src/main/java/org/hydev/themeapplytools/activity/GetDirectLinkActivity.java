@@ -1,6 +1,10 @@
 package org.hydev.themeapplytools.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +27,8 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class GetDirectLinkActivity extends AppCompatActivity {
+    private static final String EXAMPLE_THEME_LINK = "http://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +41,31 @@ public class GetDirectLinkActivity extends AppCompatActivity {
         // Get theme share link and get theme info to show.
         activityGetDirectLinkBinding.mbGetDirectLink.setOnClickListener(v -> {
             String inputShareLink = activityGetDirectLinkBinding.tilInputThemeLink.getEditText().getText().toString();
+            String[] themeLinkSplit = inputShareLink.split("/detail/");
+            if (themeLinkSplit.length != 2) {
+                new MaterialAlertDialogBuilder(this)
+                        .setTitle("错误")
+                        .setMessage("请输入主题的分享链接，例如：\n" + EXAMPLE_THEME_LINK)
+                        .setNegativeButton("返回", null)
+                        .setPositiveButton("复制", (dialog, which) -> {
+                            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                            ClipData clipData = ClipData.newPlainText("ExampleUrl", EXAMPLE_THEME_LINK);
+                            clipboardManager.setPrimaryClip(clipData);
+
+                            Toast.makeText(this, "已复制示例链接", Toast.LENGTH_SHORT).show();
+                        })
+                        .show();
+
+                return;
+            }
+
             ThemeUtils.getThemeDownloadLinkAsync(this, inputShareLink, new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
                     runOnUiThread(() -> new MaterialAlertDialogBuilder(GetDirectLinkActivity.this)
                             .setTitle("错误")
-                            .setMessage("获取直链失败 \n" +
-                                    "请检查网络连接后重试 ")
+                            .setMessage("获取直链失败, \n" +
+                                    "请检查网络连接后重试. ")
                             .setNegativeButton("OK", null)
                             .show());
                 }
@@ -64,6 +88,7 @@ public class GetDirectLinkActivity extends AppCompatActivity {
                         String fileName = themeInfo.get("fileName");
                         String fileHash = "\n" + themeInfo.get("fileHash");
 
+                        // File hash may not exist.
                         if (fileHash.equals("\n")) {
                             fileHash = "暂无";
                         }
@@ -87,10 +112,10 @@ public class GetDirectLinkActivity extends AppCompatActivity {
             DialogThemeShareBinding dialogThemeShareBinding = DialogThemeShareBinding.inflate(getLayoutInflater());
             MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this);
 
-            materialAlertDialogBuilder.setView(dialogThemeShareBinding.getRoot());
-            ThemeShareDialogUtils.init(this, dialogThemeShareBinding);
+            materialAlertDialogBuilder.setView(dialogThemeShareBinding.getRoot())
+                    .setPositiveButton("OK", null);
 
-            materialAlertDialogBuilder.setPositiveButton("OK", null);
+            ThemeShareDialogUtils.setOnClickListener(this, dialogThemeShareBinding);
             materialAlertDialogBuilder.show();
         });
     }

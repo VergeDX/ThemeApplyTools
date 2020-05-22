@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
 
+        // Open dark mode will reCreate activity.
         ThemeUtils.darkMode(this);
 
         activityMainBinding.mcvApply.setOnClickListener(l -> {

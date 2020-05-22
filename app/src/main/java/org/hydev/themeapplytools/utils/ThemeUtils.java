@@ -1,10 +1,7 @@
 package org.hydev.themeapplytools.utils;
 
 import android.app.Activity;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -33,15 +30,15 @@ import okhttp3.ResponseBody;
 
 public class ThemeUtils {
     private static final String THEME_API_URL = "https://thm.market.xiaomi.com/thm/download/v2/";
-    private static final String EXAMPLE_THEME_LINK = "http://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa";
 
     /**
      * Apply a theme by send intent to system theme manager with theme file path,
      * and also set applied flag to true.
      *
      * @param filePath mtz theme file absolute path.
+     * @return true if successful.
      */
-    public static void applyTheme(Activity activity, String filePath) {
+    public static boolean applyTheme(Activity activity, String filePath) {
         ApplicationInfo applicationInfo;
 
         try {
@@ -55,7 +52,7 @@ public class ThemeUtils {
                     .setNegativeButton("OK", null)
                     .show();
 
-            return;
+            return false;
         }
 
         // If theme manager not enable.
@@ -74,7 +71,7 @@ public class ThemeUtils {
                     })
                     .show();
 
-            return;
+            return false;
         }
 
         Intent intent = new Intent("android.intent.action.MAIN");
@@ -87,6 +84,8 @@ public class ThemeUtils {
 
         intent.putExtras(bundle);
         activity.startActivity(intent);
+
+        return true;
     }
 
     /**
@@ -99,25 +98,6 @@ public class ThemeUtils {
      */
     public static void getThemeDownloadLinkAsync(Activity activity, String themeShareLink, Callback callback) {
         String[] themeLinkSplit = themeShareLink.split("/detail/");
-
-        // Illegal input.
-        if (themeLinkSplit.length != 2) {
-            new MaterialAlertDialogBuilder(activity)
-                    .setTitle("错误")
-                    .setMessage("请输入主题的分享链接，例如：\n" + EXAMPLE_THEME_LINK)
-                    .setNegativeButton("返回", null)
-                    .setPositiveButton("复制", (dialog, which) -> {
-                        ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData clipData = ClipData.newPlainText("ExampleUrl", EXAMPLE_THEME_LINK);
-                        clipboardManager.setPrimaryClip(clipData);
-
-                        Toast.makeText(activity, "已复制示例链接", Toast.LENGTH_SHORT).show();
-                    })
-                    .show();
-
-            return;
-        }
-
         String themeToken = themeLinkSplit[1].substring(0, 36);
 
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -129,6 +109,7 @@ public class ThemeUtils {
 
     /**
      * Parse MIUI theme API response, generate a theme info Set.
+     * example JSON can get here: https://thm.market.xiaomi.com/thm/download/v2/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa?miuiUIVersion=V11
      *
      * @param responseBody HTTP response result.
      * @return theme info Set(downloadUrl, fileHash, fileSize, fileName).
@@ -165,9 +146,17 @@ public class ThemeUtils {
         }
     }
 
+    /**
+     * Set status bar color if not dark mode.
+     * https://developer.android.com/guide/topics/ui/look-and-feel/darktheme#%E9%85%8D%E7%BD%AE%E5%8F%98%E6%9B%B4
+     *
+     * @param activity to get current configuration.
+     */
     public static void darkMode(Activity activity) {
         Configuration configuration = activity.getResources().getConfiguration();
         int currentNightMode = configuration.uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+        // If not in dark mode, set status bar color to black.
         if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
             activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }

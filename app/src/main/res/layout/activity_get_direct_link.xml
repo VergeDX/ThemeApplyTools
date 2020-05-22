@@ -98,7 +98,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="27dp"
-        android:padding="13dp">
+        android:padding="9dp">
 
         <ImageView
             android:layout_width="wrap_content"
