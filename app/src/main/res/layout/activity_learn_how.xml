@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="21dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="21dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
         \nhttps://thm.market.xiaomi.com/thm/download/v2
         \n在其后面带上主题 Token 与特定参数
         \n其返回的 JSON 中就存在主题下载链接
-        \n下面是一个例子：
+        \n\n* 下面是一个例子：
         \nhttps://thm.market.xiaomi.com/thm/download/v2/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa?miuiUIVersion=V11"
         android:textSize="15sp"
         android:textStyle="bold" />

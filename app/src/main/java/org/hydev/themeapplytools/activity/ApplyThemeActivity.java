@@ -7,41 +7,40 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.OpenableColumns;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.hydev.themeapplytools.R;
+import org.hydev.themeapplytools.databinding.ActivityApplyThemeBinding;
 import org.hydev.themeapplytools.utils.FileUtils;
 import org.hydev.themeapplytools.utils.ThemeUtils;
 
 public class ApplyThemeActivity extends AppCompatActivity {
     private static String filePath = null;
+    private ActivityApplyThemeBinding activityApplyThemeBinding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_apply_theme);
+
+        activityApplyThemeBinding = ActivityApplyThemeBinding.inflate(getLayoutInflater());
+        setContentView(activityApplyThemeBinding.getRoot());
 
         ThemeUtils.darkMode(this);
 
-        MaterialButton mb_chooseFile = findViewById(R.id.mb_chooseFile);
-        mb_chooseFile.setOnClickListener(l -> FileUtils.chooseFile(this));
+        activityApplyThemeBinding.mbChooseFile.setOnClickListener(l -> FileUtils.chooseFile(this));
 
-        TextView tv_filePath = findViewById(R.id.tv_filePath);
-        MaterialButton mb_applyTheme = findViewById(R.id.mb_applyTheme);
-        mb_applyTheme.setOnClickListener(l -> {
+        activityApplyThemeBinding.mbApplyTheme.setOnClickListener(l -> {
             if (filePath == null) {
                 Snackbar.make(l, R.string.no_Choose_File, Snackbar.LENGTH_LONG)
                         .show();
             } else {
                 ThemeUtils.applyTheme(this, filePath);
                 filePath = null;
-                tv_filePath.setText("");
+                activityApplyThemeBinding.tvFilePath.setText("");
             }
         });
     }
@@ -64,7 +63,7 @@ public class ApplyThemeActivity extends AppCompatActivity {
                 if (cursor != null && cursor.moveToFirst()) {
                     String fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                     if (!fileName.endsWith(".mtz")) {
-                        Snackbar.make(findViewById(R.id.ll_applyTheme), R.string.not_mtz_file, Snackbar.LENGTH_LONG)
+                        Snackbar.make(activityApplyThemeBinding.getRoot(), R.string.not_mtz_file, Snackbar.LENGTH_LONG)
                                 .show();
                         fileName = null;
                     }
@@ -78,8 +77,7 @@ public class ApplyThemeActivity extends AppCompatActivity {
                         String filePathSpilt = path.substring(filePathSpiltArray[0].length() + 1);
                         filePath = Environment.getExternalStorageDirectory().getPath() + "/" + filePathSpilt;
 
-                        TextView tv_filePath = findViewById(R.id.tv_filePath);
-                        tv_filePath.setText("你选择的文件是：\n" + filePath);
+                        activityApplyThemeBinding.tvFilePath.setText("你选择的文件是：\n" + filePath);
                     }
                 }
             }

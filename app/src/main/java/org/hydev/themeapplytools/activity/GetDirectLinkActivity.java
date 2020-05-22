@@ -1,17 +1,14 @@
 package org.hydev.themeapplytools.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputLayout;
 
-import org.hydev.themeapplytools.R;
+import org.hydev.themeapplytools.databinding.ActivityGetDirectLinkBinding;
+import org.hydev.themeapplytools.databinding.DialogThemeShareBinding;
 import org.hydev.themeapplytools.utils.FileUtils;
 import org.hydev.themeapplytools.utils.ThemeShareDialogUtils;
 import org.hydev.themeapplytools.utils.ThemeUtils;
@@ -29,15 +26,15 @@ public class GetDirectLinkActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_direct_link);
+
+        ActivityGetDirectLinkBinding activityGetDirectLinkBinding = ActivityGetDirectLinkBinding.inflate(getLayoutInflater());
+        setContentView(activityGetDirectLinkBinding.getRoot());
 
         ThemeUtils.darkMode(this);
 
         // Get theme share link and get theme info to show.
-        Button mb_getDirectLink = findViewById(R.id.mb_getDirectLink);
-        TextInputLayout til_inputThemeLink = findViewById(R.id.til_inputThemeLink);
-        mb_getDirectLink.setOnClickListener(v -> {
-            String inputShareLink = til_inputThemeLink.getEditText().getText().toString();
+        activityGetDirectLinkBinding.mbGetDirectLink.setOnClickListener(v -> {
+            String inputShareLink = activityGetDirectLinkBinding.tilInputThemeLink.getEditText().getText().toString();
             ThemeUtils.getThemeDownloadLinkAsync(this, inputShareLink, new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -86,13 +83,12 @@ public class GetDirectLinkActivity extends AppCompatActivity {
             });
         });
 
-        MaterialCardView mcv_themeShareSite = findViewById(R.id.mcv_themeShareSite);
-        mcv_themeShareSite.setOnClickListener(l -> {
-            View view = getLayoutInflater().inflate(R.layout.dialog_theme_share, null);
+        activityGetDirectLinkBinding.mcvThemeShareSite.setOnClickListener(l -> {
+            DialogThemeShareBinding dialogThemeShareBinding = DialogThemeShareBinding.inflate(getLayoutInflater());
             MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this);
 
-            materialAlertDialogBuilder.setView(view);
-            ThemeShareDialogUtils.init(this, view);
+            materialAlertDialogBuilder.setView(dialogThemeShareBinding.getRoot());
+            ThemeShareDialogUtils.init(this, dialogThemeShareBinding);
 
             materialAlertDialogBuilder.setPositiveButton("OK", null);
             materialAlertDialogBuilder.show();

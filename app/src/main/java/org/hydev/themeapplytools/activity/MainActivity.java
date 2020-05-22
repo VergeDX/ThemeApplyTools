@@ -6,9 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.card.MaterialCardView;
-
-import org.hydev.themeapplytools.R;
+import org.hydev.themeapplytools.databinding.ActivityMainBinding;
 import org.hydev.themeapplytools.utils.ThemeShareDialogUtils;
 import org.hydev.themeapplytools.utils.ThemeUtils;
 
@@ -19,32 +17,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        ActivityMainBinding activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(activityMainBinding.getRoot());
 
         ThemeUtils.darkMode(this);
 
-        MaterialCardView mcv_apply = findViewById(R.id.mcv_apply);
-        mcv_apply.setOnClickListener(l -> {
+        activityMainBinding.mcvApply.setOnClickListener(l -> {
             Intent intent = new Intent(MainActivity.this, ApplyThemeActivity.class);
             startActivity(intent);
         });
 
-        MaterialCardView mcv_getDirectLink = findViewById(R.id.mcv_getDirectLink);
-        mcv_getDirectLink.setOnClickListener(l -> {
+        activityMainBinding.mcvGetDirectLink.setOnClickListener(l -> {
             Intent intent = new Intent(MainActivity.this, GetDirectLinkActivity.class);
             startActivity(intent);
         });
 
-        MaterialCardView mcv_learnHow = findViewById(R.id.mcv_learnHow);
-        mcv_learnHow.setOnClickListener(l -> {
+        activityMainBinding.mcvLearnHow.setOnClickListener(l -> {
             Intent intent = new Intent(MainActivity.this, LearnHowActivity.class);
             startActivity(intent);
         });
 
-        MaterialCardView mcv_exploreGithub = findViewById(R.id.mcv_exploreGithub);
-        mcv_exploreGithub.setOnClickListener(l -> ThemeShareDialogUtils.openBrowser(this, GITHUB_URL));
-
-        MaterialCardView mcv_meInCoolapk = findViewById(R.id.mcv_meInCoolapk);
-        mcv_meInCoolapk.setOnClickListener(l -> ThemeShareDialogUtils.openBrowser(this, ME_COOLAPK_URL));
+        activityMainBinding.mcvExploreGithub.setOnClickListener(l -> ThemeShareDialogUtils.openBrowser(this, GITHUB_URL));
+        activityMainBinding.mcvMeInCoolapk.setOnClickListener(l -> ThemeShareDialogUtils.openBrowser(this, ME_COOLAPK_URL));
     }
 }

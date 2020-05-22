@@ -21,6 +21,11 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
+    // https://developer.android.com/topic/libraries/view-binding
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -34,5 +39,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.0-alpha06'
     implementation 'com.squareup.okhttp3:okhttp:4.6.0'
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    // Not used yet.
     implementation 'eu.darken.rxshell:core:1.0.9'
 }
