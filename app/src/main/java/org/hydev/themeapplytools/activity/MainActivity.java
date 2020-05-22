@@ -12,32 +12,32 @@ import org.hydev.themeapplytools.R;
 import org.hydev.themeapplytools.utils.ThemeShareDialogUtils;
 import org.hydev.themeapplytools.utils.ThemeUtils;
 
-public class MainActivityNew extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private static final String GITHUB_URL = "https://github.com/VergeDX/ThemeApplyTools";
     private static final String ME_COOLAPK_URL = "https://coolapk.com/u/506843";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_new);
+        setContentView(R.layout.activity_main);
 
         ThemeUtils.darkMode(this);
 
         MaterialCardView mcv_apply = findViewById(R.id.mcv_apply);
         mcv_apply.setOnClickListener(l -> {
-            Intent intent = new Intent(MainActivityNew.this, ApplyThemeActivity.class);
+            Intent intent = new Intent(MainActivity.this, ApplyThemeActivity.class);
             startActivity(intent);
         });
 
         MaterialCardView mcv_getDirectLink = findViewById(R.id.mcv_getDirectLink);
         mcv_getDirectLink.setOnClickListener(l -> {
-            Intent intent = new Intent(MainActivityNew.this, GetDirectLinkActivity.class);
+            Intent intent = new Intent(MainActivity.this, GetDirectLinkActivity.class);
             startActivity(intent);
         });
 
         MaterialCardView mcv_learnHow = findViewById(R.id.mcv_learnHow);
         mcv_learnHow.setOnClickListener(l -> {
-            Intent intent = new Intent(MainActivityNew.this, LearnHowActivity.class);
+            Intent intent = new Intent(MainActivity.this, LearnHowActivity.class);
             startActivity(intent);
         });
 
