@@ -15,7 +15,7 @@ import org.hydev.themeapplytools.utils.ThemeUtils
 class ApplyThemeActivity : AppCompatActivity() {
     // Lateinit means that it is not assigned when the object is created
     lateinit var activityApplyThemeBinding: ActivityApplyThemeBinding
-    var filePath: String? = null
+    var path: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,19 +38,19 @@ class ApplyThemeActivity : AppCompatActivity() {
         // Click "Apply Theme"
         activityApplyThemeBinding.mbApplyTheme.setOnClickListener { l: View? ->
 
-            if (filePath == null) {
+            if (path == null) {
                 Snackbar.make(l!!, " ! 你还没有选择文件 ! ", Snackbar.LENGTH_LONG).show()
             }
-            else if (!filePath!!.endsWith(".mtz")) {
+            else if (!path!!.endsWith(".mtz")) {
                 Snackbar.make(l!!, " ! 你选择的不是主题（mtz）文件 ! ", Snackbar.LENGTH_LONG).show()
             }
             else {
-                if (ThemeUtils.applyTheme(this, filePath)) {
+                if (ThemeUtils.applyTheme(this, path)) {
                     alertInfo(this, "完成", "主题已应用完毕.\n若主题商店版本太老,\n可能会没有效果.")
                 }
 
                 // TODO: Delete this?
-                filePath = null
+                path = null
                 activityApplyThemeBinding.tvFilePath.text = ""
             }
         }
@@ -67,7 +67,7 @@ class ApplyThemeActivity : AppCompatActivity() {
 
         try {
             if (requestCode == 7 && resultCode == Activity.RESULT_OK) {
-                val path = ContentUriUtils.getFilePath(this, data?.data!!)
+                path = ContentUriUtils.getFilePath(this, data?.data!!)
 
                 activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$path" +
                     if (!path!!.endsWith(".mtz")) "\n\n ! 但它不是主题（mtz）文件 ! " else ""
