@@ -27,7 +27,6 @@ class ApplyThemeActivity : AppCompatActivity() {
 
         // Click "Choose File"
         activityApplyThemeBinding.mbChooseFile.setOnClickListener {
-
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.type = "*/*"
             intent.putExtra(EXTRA_LOCAL_ONLY, true)
@@ -70,7 +69,7 @@ class ApplyThemeActivity : AppCompatActivity() {
             if (requestCode == 7 && resultCode == Activity.RESULT_OK) {
                 val path = ContentUriUtils.getFilePath(this, data?.data!!)
 
-                activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$filePath" +
+                activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$path" +
                     if (!path!!.endsWith(".mtz")) "\n\n ! 但它不是主题（mtz）文件 ! " else ""
             }
         } catch (e: NullPointerException) {}
