@@ -15,6 +15,8 @@ import org.hydev.themeapplytools.utils.ThemeUtils
 import java.io.IOException
 
 class GetDirectLinkActivity : AppCompatActivity() {
+    val EXAMPLE_THEME_LINK = "http://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,6 +24,8 @@ class GetDirectLinkActivity : AppCompatActivity() {
         setContentView(activityGetDirectLinkBinding.root)
 
         ThemeUtils.darkMode(this)
+
+        val activity = this
 
         // Get theme share link and get theme info to show.
         activityGetDirectLinkBinding.mbGetDirectLink.setOnClickListener {
@@ -33,12 +37,7 @@ class GetDirectLinkActivity : AppCompatActivity() {
                     .setTitle("错误")
                     .setMessage("请输入主题的分享链接，例如：\n$EXAMPLE_THEME_LINK")
                     .setNegativeButton("返回", null)
-                    .setPositiveButton("复制") { dialog: DialogInterface?, which: Int ->
-                        val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                        val clipData = ClipData.newPlainText("ExampleUrl", EXAMPLE_THEME_LINK)
-                        clipboardManager.setPrimaryClip(clipData)
-                        Toast.makeText(this, "已复制示例链接", Toast.LENGTH_SHORT).show()
-                    }
+                    .setPositiveButton("复制") { _: DialogInterface?, _: Int -> FileUtils.copyLink(this, EXAMPLE_THEME_LINK) }
                     .show()
                 return@setOnClickListener
             }
@@ -47,7 +46,7 @@ class GetDirectLinkActivity : AppCompatActivity() {
             ThemeUtils.getThemeDownloadLinkAsync(inputShareLink, object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     runOnUiThread {
-                        MaterialAlertDialogBuilder(this@GetDirectLinkActivity)
+                        MaterialAlertDialogBuilder(activity)
                             .setTitle("错误")
                             .setMessage("""
                                 获取直链失败, 
@@ -62,7 +61,7 @@ class GetDirectLinkActivity : AppCompatActivity() {
                     // Cannot get theme info, maybe link is wrong.
                     if (info == null) {
                         runOnUiThread {
-                            MaterialAlertDialogBuilder(this@GetDirectLinkActivity)
+                            MaterialAlertDialogBuilder(activity)
                                 .setTitle("失败")
                                 .setMessage("""
                                     获取主题信息失败 
@@ -74,7 +73,7 @@ class GetDirectLinkActivity : AppCompatActivity() {
                         val downloadUrl = info.getDownloadUrl()
 
                         runOnUiThread {
-                            MaterialAlertDialogBuilder(this@GetDirectLinkActivity)
+                            MaterialAlertDialogBuilder(activity)
                                 .setTitle(info.getFileName())
                                 .setMessage("""
                                     文件大小：${info.getFileSize()}
@@ -85,8 +84,8 @@ class GetDirectLinkActivity : AppCompatActivity() {
                                     哈希值：${info.getFileHash()}
                                     
                                     """.trimIndent())
-                                .setNegativeButton("复制链接") { dialog: DialogInterface?, which: Int -> FileUtils.copyLink(this@GetDirectLinkActivity, downloadUrl) }
-                                .setPositiveButton("直接下载") { dialog: DialogInterface?, which: Int -> FileUtils.systemDownload(this@GetDirectLinkActivity, info) }
+                                .setNegativeButton("复制链接") { dialog: DialogInterface?, which: Int -> FileUtils.copyLink(activity, downloadUrl) }
+                                .setPositiveButton("直接下载") { dialog: DialogInterface?, which: Int -> FileUtils.systemDownload(activity, info) }
                                 .show()
                         }
                     }
@@ -103,10 +102,5 @@ class GetDirectLinkActivity : AppCompatActivity() {
             ThemeShareDialogUtils.setOnClickListener(this, dialogThemeShareBinding)
             materialAlertDialogBuilder.show()
         }
-    }
-
-    companion object
-    {
-        private const val EXAMPLE_THEME_LINK = "http://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa"
     }
 }
