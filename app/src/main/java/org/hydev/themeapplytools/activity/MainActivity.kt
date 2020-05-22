@@ -2,42 +2,28 @@ package org.hydev.themeapplytools.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import org.hydev.themeapplytools.activity.MainActivity
 import org.hydev.themeapplytools.databinding.ActivityMainBinding
-import org.hydev.themeapplytools.utils.ThemeShareDialogUtils
+import org.hydev.themeapplytools.utils.ThemeShareDialogUtils.openBrowser
 import org.hydev.themeapplytools.utils.ThemeUtils
+import kotlin.reflect.KClass
 
-class MainActivity : AppCompatActivity()
-{
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
         // Open dark mode will reCreate activity.
         ThemeUtils.darkMode(this)
-        activityMainBinding.mcvApply.setOnClickListener { l: View? ->
-            val intent = Intent(this@MainActivity, ApplyThemeActivity::class.java)
-            startActivity(intent)
-        }
-        activityMainBinding.mcvGetDirectLink.setOnClickListener { l: View? ->
-            val intent = Intent(this@MainActivity, GetDirectLinkActivity::class.java)
-            startActivity(intent)
-        }
-        activityMainBinding.mcvLearnHow.setOnClickListener { l: View? ->
-            val intent = Intent(this@MainActivity, LearnHowActivity::class.java)
-            startActivity(intent)
-        }
-        activityMainBinding.mcvExploreGithub.setOnClickListener { l: View? -> ThemeShareDialogUtils.openBrowser(this, GITHUB_URL) }
-        activityMainBinding.mcvMeInCoolapk.setOnClickListener { l: View? -> ThemeShareDialogUtils.openBrowser(this, ME_COOLAPK_URL) }
+        activityMainBinding.mcvApply.setOnClickListener { activity(ApplyThemeActivity::class) }
+        activityMainBinding.mcvGetDirectLink.setOnClickListener { activity(GetDirectLinkActivity::class) }
+        activityMainBinding.mcvLearnHow.setOnClickListener { activity(LearnHowActivity::class) }
+        activityMainBinding.mcvExploreGithub.setOnClickListener { openBrowser(this, "https://github.com/VergeDX/ThemeApplyTools") }
+        activityMainBinding.mcvMeInCoolapk.setOnClickListener { openBrowser(this, "https://coolapk.com/u/506843") }
     }
 
-    companion object
-    {
-        private const val GITHUB_URL = "https://github.com/VergeDX/ThemeApplyTools"
-        private const val ME_COOLAPK_URL = "https://coolapk.com/u/506843"
+    fun activity(cls: KClass<*>) {
+        startActivity(Intent(this, cls.java))
     }
 }
