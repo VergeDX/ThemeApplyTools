@@ -8,6 +8,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.widget.Toast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 object FileUtils {
     /**
@@ -38,5 +39,19 @@ object FileUtils {
 
         (activity.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
         Toast.makeText(activity, "已开始下载", Toast.LENGTH_LONG).show()
+    }
+
+    /**
+     * Create an alert
+     */
+    fun alert(activity: Activity, title: String, message: String): MaterialAlertDialogBuilder {
+        return MaterialAlertDialogBuilder(activity).setTitle(title).setMessage(message.trimIndent())
+    }
+
+    /**
+     * Show info alert
+     */
+    fun alertInfo(activity: Activity, title: String, message: String) {
+        alert(activity, title, message).setPositiveButton("OK", null).show()
     }
 }
