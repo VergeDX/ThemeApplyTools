@@ -10,6 +10,8 @@ import okhttp3.Response
 import org.hydev.themeapplytools.databinding.ActivityGetDirectLinkBinding
 import org.hydev.themeapplytools.databinding.DialogThemeShareBinding
 import org.hydev.themeapplytools.utils.FileUtils
+import org.hydev.themeapplytools.utils.FileUtils.alert
+import org.hydev.themeapplytools.utils.FileUtils.alertInfo
 import org.hydev.themeapplytools.utils.ThemeShareDialogUtils
 import org.hydev.themeapplytools.utils.ThemeUtils
 import java.io.IOException
@@ -25,7 +27,7 @@ class GetDirectLinkActivity : AppCompatActivity() {
 
         ThemeUtils.darkMode(this)
 
-        val activity = this
+        val self = this
 
         // Get theme share link and get theme info to show.
         activityGetDirectLinkBinding.mbGetDirectLink.setOnClickListener {
@@ -33,47 +35,27 @@ class GetDirectLinkActivity : AppCompatActivity() {
             val themeLinkSplit = inputShareLink.split("/detail/")
 
             if (themeLinkSplit.size != 2) {
-                MaterialAlertDialogBuilder(this)
-                    .setTitle("错误")
-                    .setMessage("请输入主题的分享链接，例如：\n$EXAMPLE_THEME_LINK")
+                alert(this, "错误", "请输入主题的分享链接，例如：\n$EXAMPLE_THEME_LINK")
                     .setNegativeButton("返回", null)
                     .setPositiveButton("复制") { _: DialogInterface?, _: Int -> FileUtils.copyLink(this, EXAMPLE_THEME_LINK) }
                     .show()
+
                 return@setOnClickListener
             }
 
             // Download
             ThemeUtils.getThemeDownloadLinkAsync(inputShareLink, object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    runOnUiThread {
-                        MaterialAlertDialogBuilder(activity)
-                            .setTitle("错误")
-                            .setMessage("""
-                                获取直链失败, 
-                                请检查网络连接后重试.""".trimIndent())
-                            .setNegativeButton("OK", null).show()
-                    }
-                }
+                override fun onFailure(call: Call, e: IOException) { alertInfo(self, "错误", "获取直链失败,\n请检查网络连接后重试.") }
 
                 override fun onResponse(call: Call, response: Response) {
                     val info = ThemeUtils.getThemeInfo(response.body)
 
-                    // Cannot get theme info, maybe link is wrong.
-                    if (info == null) {
-                        runOnUiThread {
-                            MaterialAlertDialogBuilder(activity)
-                                .setTitle("失败")
-                                .setMessage("""
-                                    获取主题信息失败 
-                                    可能是链接输入错误""".trimIndent())
-                                .setNegativeButton("OK", null).show()
-                        }
-                    }
+                    if (info == null) { alertInfo(self, "失败", "获取主题信息失败,\n可能是链接输入错误\n(在国外的话好像不能获取).") }
                     else {
                         val downloadUrl = info.getDownloadUrl()
 
                         runOnUiThread {
-                            MaterialAlertDialogBuilder(activity)
+                            MaterialAlertDialogBuilder(self)
                                 .setTitle(info.getFileName())
                                 .setMessage("""
                                     文件大小：${info.getFileSize()}
@@ -84,8 +66,8 @@ class GetDirectLinkActivity : AppCompatActivity() {
                                     哈希值：${info.getFileHash()}
                                     
                                     """.trimIndent())
-                                .setNegativeButton("复制链接") { dialog: DialogInterface?, which: Int -> FileUtils.copyLink(activity, downloadUrl) }
-                                .setPositiveButton("直接下载") { dialog: DialogInterface?, which: Int -> FileUtils.systemDownload(activity, info) }
+                                .setNegativeButton("复制链接") { dialog: DialogInterface?, which: Int -> FileUtils.copyLink(self, downloadUrl) }
+                                .setPositiveButton("直接下载") { dialog: DialogInterface?, which: Int -> FileUtils.systemDownload(self, info) }
                                 .show()
                         }
                     }

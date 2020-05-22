@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import org.hydev.themeapplytools.databinding.ActivityApplyThemeBinding
+import org.hydev.themeapplytools.utils.FileUtils.alertInfo
 import org.hydev.themeapplytools.utils.ThemeUtils
 
 class ApplyThemeActivity : AppCompatActivity() {
@@ -44,15 +44,10 @@ class ApplyThemeActivity : AppCompatActivity() {
             }
             else {
                 if (ThemeUtils.applyTheme(this, filePath)) {
-                    MaterialAlertDialogBuilder(this)
-                        .setTitle("完成")
-                        .setMessage("""
-                            主题已应用完毕.
-                            若主题商店版本太老,
-                            可能会没有效果.""".trimIndent())
-                        .setPositiveButton("OK", null)
-                        .show()
+                    alertInfo(this, "完成", "主题已应用完毕.\n若主题商店版本太老,\n可能会没有效果.")
                 }
+
+                // TODO: Delete this?
                 filePath = null
                 activityApplyThemeBinding.tvFilePath.text = ""
             }
