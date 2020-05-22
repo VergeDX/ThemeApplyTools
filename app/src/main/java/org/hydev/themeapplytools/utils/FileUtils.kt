@@ -54,11 +54,4 @@ object FileUtils {
     fun alertInfo(activity: Activity, title: String, message: String) {
         alert(activity, title, message).setPositiveButton("OK", null).show(activity)
     }
-
-    /**
-     * Safe show
-     */
-    fun MaterialAlertDialogBuilder.show(activity: Activity) {
-        activity.runOnUiThread { show() }
-    }
 }
