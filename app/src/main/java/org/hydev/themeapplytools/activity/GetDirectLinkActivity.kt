@@ -66,7 +66,7 @@ class GetDirectLinkActivity : AppCompatActivity() {
                                 .negative("复制链接") { FileUtils.copyLink(self, url) }
                                 .positive("直接下载") {
                                     ThemeShareDialogUtils.openBrowser(self, url)
-                                    Toast.makeText(self, "", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(self, "跳转至浏览器进行下载", Toast.LENGTH_SHORT).show()
                                 }
                                 .show(self)
                     }
