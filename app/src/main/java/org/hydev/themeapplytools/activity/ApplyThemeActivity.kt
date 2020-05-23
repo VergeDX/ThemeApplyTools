@@ -40,11 +40,9 @@ class ApplyThemeActivity : AppCompatActivity() {
 
             if (path == null) {
                 Snackbar.make(l!!, " ! 你还没有选择文件 ! ", Snackbar.LENGTH_LONG).show()
-            }
-            else if (!path!!.endsWith(".mtz")) {
+            } else if (!path!!.endsWith(".mtz")) {
                 Snackbar.make(l!!, " ! 你选择的不是主题（mtz）文件 ! ", Snackbar.LENGTH_LONG).show()
-            }
-            else {
+            } else {
                 if (ThemeUtils.applyTheme(this, path)) {
                     alertInfo(this, "完成", "主题已应用完毕.\n若主题商店版本太老,\n可能会没有效果.")
                 }
@@ -65,13 +63,11 @@ class ApplyThemeActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        try {
-            if (requestCode == 7 && resultCode == Activity.RESULT_OK) {
-                path = ContentUriUtils.getFilePath(this, data?.data!!)
+        if (requestCode == 7 && resultCode == Activity.RESULT_OK) {
+            path = ContentUriUtils.getFilePath(this, data?.data!!)
 
-                activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$path" +
+            activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$path" +
                     if (!path!!.endsWith(".mtz")) "\n\n ! 但它不是主题（mtz）文件 ! " else ""
-            }
-        } catch (e: NullPointerException) {}
+        }
     }
 }

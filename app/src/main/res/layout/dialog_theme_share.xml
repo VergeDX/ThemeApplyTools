@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:paddingHorizontal="24dp"
+    android:paddingTop="24dp">
 
     <TextView
-        android:drawableStart="@drawable/ic_public_black_24dp"
-        android:drawablePadding="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="18dp"
+        android:drawableStart="@drawable/ic_public_black_24dp"
+        android:drawablePadding="7dp"
         android:text="@string/theme_sites_title"
         android:textSize="19sp"
         android:textStyle="bold" />

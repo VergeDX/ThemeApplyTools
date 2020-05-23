@@ -16,10 +16,10 @@ fun MaterialAlertDialogBuilder.show(activity: Activity) = activity.runOnUiThread
  * Negative button
  */
 fun MaterialAlertDialogBuilder.negative(text: String, callback: () -> Unit) =
-    setNegativeButton(text) { _: DialogInterface, _: Int -> callback() }
+        setNegativeButton(text) { _: DialogInterface, _: Int -> callback() }
 
 /**
  * Positive button
  */
 fun MaterialAlertDialogBuilder.positive(text: String, callback: () -> Unit) =
-    setPositiveButton(text) { _: DialogInterface, _: Int -> callback() }
+        setPositiveButton(text) { _: DialogInterface, _: Int -> callback() }

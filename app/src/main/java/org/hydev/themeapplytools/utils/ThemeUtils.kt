@@ -37,8 +37,7 @@ object ThemeUtils {
         // If theme manager exists.
         val applicationInfo: ApplicationInfo = try {
             activity.packageManager.getApplicationInfo("com.android.thememanager", 0)
-        }
-        catch (e: PackageManager.NameNotFoundException) {
+        } catch (e: PackageManager.NameNotFoundException) {
             alertInfo(activity, "错误", "没有找到 MIUI 主题商店\n您或许卸载了 MIUI 主题商店")
             return false
         }
@@ -46,13 +45,13 @@ object ThemeUtils {
         // If theme manager is not enabled.
         if (!applicationInfo.enabled) {
             alert(activity, "警告", "MIUI 主题商店被禁用\n请手动启用 MIUI 主题商店")
-                .negative("返回") {}
-                .positive("启用") {
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    intent.data = Uri.parse("package:com.android.thememanager")
-                    activity.startActivity(intent)
-                    Toast.makeText(activity, "请点击下方的 “启用”", Toast.LENGTH_LONG).show()
-                }.show(activity)
+                    .negative("返回") {}
+                    .positive("启用") {
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        intent.data = Uri.parse("package:com.android.thememanager")
+                        activity.startActivity(intent)
+                        Toast.makeText(activity, "请点击下方的 “启用”", Toast.LENGTH_LONG).show()
+                    }.show(activity)
             return false
         }
 
@@ -110,8 +109,7 @@ object ThemeUtils {
     fun getThemeInfo(responseBody: ResponseBody?): MiuiThemeData? {
         return try {
             Json(Stable).parse(MiuiTheme.serializer(), responseBody!!.string()).apiData
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             null
         }
     }

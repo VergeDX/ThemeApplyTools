@@ -34,7 +34,7 @@ object FileUtils {
         val request = DownloadManager.Request(Uri.parse(themeInfo.getDownloadUrl()))
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir()
+        activity.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)?.mkdir()
         request.setDestinationInExternalPublicDir("Download", themeInfo.getFileName())
 
         (activity.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)

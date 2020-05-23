@@ -33,9 +33,9 @@ class GetDirectLinkActivity : AppCompatActivity() {
 
             if (themeLinkSplit.size != 2) {
                 alert(this, "错误", "请输入主题的分享链接，例如：\n$EXAMPLE_THEME_LINK")
-                    .negative("返回") {}
-                    .positive("复制") { FileUtils.copyLink(this, EXAMPLE_THEME_LINK) }
-                    .show(self)
+                        .negative("返回") {}
+                        .positive("复制") { FileUtils.copyLink(this, EXAMPLE_THEME_LINK) }
+                        .show(this)
 
                 return@setOnClickListener
             }
@@ -62,9 +62,9 @@ class GetDirectLinkActivity : AppCompatActivity() {
                                 哈希值：${info.getFileHash()}
                                 
                                 """)
-                            .negative("复制链接") { FileUtils.copyLink(self, url) }
-                            .positive("直接下载") { FileUtils.systemDownload(self, info) }
-                            .show(self)
+                                .negative("复制链接") { FileUtils.copyLink(self, url) }
+                                .positive("直接下载") { FileUtils.systemDownload(self, info) }
+                                .show(self)
                     }
                 }
             })

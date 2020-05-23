@@ -6,12 +6,12 @@
     android:orientation="vertical">
 
     <TextView
-        android:drawableStart="@mipmap/ic_launcher"
-        android:drawablePadding="13dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginVertical="21dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="21dp"
+        android:layout_marginStart="21dp"
+        android:drawableStart="@mipmap/ic_launcher"
+        android:drawablePadding="13dp"
         android:gravity="center_vertical"
         android:text="@string/app_name"
         android:textSize="21sp" />
@@ -26,11 +26,11 @@
         app:cardElevation="4dp">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_brush_black_24dp"
             android:drawablePadding="13dp"
             android:padding="21dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/apply_theme"
             android:textSize="19sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -45,11 +45,11 @@
         app:cardElevation="4dp">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_insert_link_black_24dp"
             android:drawablePadding="13dp"
             android:padding="21dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/get_direct_link"
             android:textSize="19sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -64,11 +64,11 @@
         app:cardElevation="4dp">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_description_black_24dp"
             android:drawablePadding="13dp"
             android:padding="21dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/app_how"
             android:textSize="19sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -83,11 +83,11 @@
         app:cardElevation="4dp">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_explore_black_24dp"
             android:drawablePadding="13dp"
             android:padding="21dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/github_src"
             android:textSize="19sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -102,11 +102,11 @@
         app:cardElevation="4dp">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_info_outline_black_24dp"
             android:drawablePadding="13dp"
             android:padding="21dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/coolapk_me"
             android:textSize="19sp" />
     </com.google.android.material.card.MaterialCardView>
