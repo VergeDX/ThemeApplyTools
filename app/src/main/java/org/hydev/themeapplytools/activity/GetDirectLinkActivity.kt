@@ -1,6 +1,7 @@
 package org.hydev.themeapplytools.activity
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import okhttp3.Call
@@ -63,7 +64,10 @@ class GetDirectLinkActivity : AppCompatActivity() {
                                 
                                 """)
                                 .negative("复制链接") { FileUtils.copyLink(self, url) }
-                                .positive("直接下载") { FileUtils.systemDownload(self, info) }
+                                .positive("直接下载") {
+                                    ThemeShareDialogUtils.openBrowser(self, url)
+                                    Toast.makeText(self, "", Toast.LENGTH_SHORT).show()
+                                }
                                 .show(self)
                     }
                 }
