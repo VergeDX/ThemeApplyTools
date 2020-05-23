@@ -41,6 +41,7 @@
         \nhttps://thm.market.xiaomi.com/thm/download/v2/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa?miuiUIVersion=V11
     </string>
 
+    <string name="theme_sites_title">主题分享站</string>
     <string name="official_theme_store">小米主题商店</string>
     <string name="miui_themes_tk">MIUIThemes.TK</string>
     <string name="techruchi_com">techruchi.com</string>

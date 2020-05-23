@@ -5,46 +5,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="21dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="3dp"
-            android:src="@drawable/ic_insert_link_black_24dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="7dp"
-            android:text="@string/get_direct_link"
-            android:textSize="19sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:layout_marginHorizontal="21dp"
+        android:layout_marginVertical="24dp"
+        android:drawableStart="@drawable/ic_insert_link_black_24dp"
+        android:drawablePadding="7dp"
+        android:text="@string/get_direct_link"
+        android:textSize="19sp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="21dp"
-        android:padding="9dp"
+        android:layout_marginBottom="9dp"
         android:text="@string/please_input_theme_link_below"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textSize="17sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_inputThemeLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="21dp"
-        android:layout_marginVertical="9dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="9dp"
         android:hint="@string/miui_theme_link_or_text">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -58,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="21dp"
+        android:layout_marginBottom="9dp"
         android:text="@string/get_info_or_download_file"
         app:icon="@drawable/ic_file_download_black_24dp"
         app:iconGravity="textStart" />
@@ -67,50 +53,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="21dp"
-        android:layout_marginVertical="9dp"
+        android:layout_marginBottom="9dp"
         app:cardCornerRadius="7dp"
-        app:cardElevation="21dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="7dp"
-            android:orientation="horizontal"
-            android:padding="13dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:src="@drawable/ic_public_black_24dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="13dp"
-                android:text="@string/theme_share_site"
-                android:textSize="19sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="27dp"
-        android:padding="9dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_warning_black_24dp" />
+        app:cardElevation="4dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="7dp"
-            android:text="@string/warning_about_vpn"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:drawableStart="@drawable/ic_public_black_24dp"
+            android:drawablePadding="13dp"
+            android:padding="21dp"
+            android:text="@string/theme_share_site"
+            android:textSize="19sp" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="21dp"
+        android:drawableStart="@drawable/ic_warning_black_24dp"
+        android:padding="9dp"
+        android:text="@string/warning_about_vpn"
+        android:textSize="17sp" />
 </LinearLayout>
