@@ -6,8 +6,8 @@
     "apkData": {
       "type": "MAIN",
       "splits": [],
-      "versionCode": 17,
-      "versionName": "2.3.2",
+      "versionCode": 18,
+      "versionName": "2.3.3",
       "enabled": true,
       "outputFile": "app-release.apk",
       "fullName": "release",
