@@ -1,13 +1,14 @@
 package org.hydev.themeapplytools.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.Intent.EXTRA_LOCAL_ONLY
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import droidninja.filepicker.utils.ContentUriUtils
 import org.hydev.themeapplytools.databinding.ActivityApplyThemeBinding
 import org.hydev.themeapplytools.utils.FileUtils.alertInfo
 import org.hydev.themeapplytools.utils.ThemeUtils
@@ -60,14 +61,21 @@ class ApplyThemeActivity : AppCompatActivity() {
      * @param requestCode is always 7.
      * @param data        contains user chosen file Uri.
      */
+    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 7 && resultCode == Activity.RESULT_OK) {
-            path = ContentUriUtils.getFilePath(this, data?.data!!)
+            val path = data?.data?.path
 
-            activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$path" +
-                    if (!path!!.endsWith(".mtz")) "\n\n ! 但它不是主题（mtz）文件 ! " else ""
+            // Build the absolutely path of theme file.
+            val filePathSpiltArray = path!!.split(":")
+            val filePathSpilt = path.substring(filePathSpiltArray[0].length + 1)
+            this.path = Environment.getExternalStorageDirectory().path + "/" + filePathSpilt
+
+            activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n${this.path}" +
+                if (!this.path!!.endsWith(".mtz")) "\n\n ! 但它不是主题（mtz）文件 ! " else ""
         }
     }
 }
