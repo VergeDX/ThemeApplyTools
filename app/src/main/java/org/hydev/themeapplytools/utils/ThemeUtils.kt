@@ -95,7 +95,7 @@ object ThemeUtils {
         fun getDownloadUrl(): String = URLDecoder.decode(downloadUrl, "UTF-8")
         fun getFileHash() = (if (fileHash.isEmpty()) "暂无" else fileHash).toUpperCase(Locale.ROOT)
         fun getFileSize() = String.format(Locale.CHINESE, "%.2f", fileSize / 10e5) + " MB"
-        fun getFileName() = getDownloadUrl().split("/").last()
+        fun getFileName() = URLDecoder.decode(downloadUrl.split("/").last(), "UTF-8")
     }
 
     /**
