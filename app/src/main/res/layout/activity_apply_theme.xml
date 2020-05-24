@@ -36,6 +36,18 @@
         app:icon="@drawable/ic_insert_drive_file_black_24dp"
         app:iconSize="17dp" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/mb_manualEntry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:hint="@string/mb_manual_entry">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:layout_width="match_parent"

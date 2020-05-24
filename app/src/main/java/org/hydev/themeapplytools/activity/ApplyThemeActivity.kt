@@ -16,7 +16,6 @@ import org.hydev.themeapplytools.utils.ThemeUtils
 class ApplyThemeActivity : AppCompatActivity() {
     // Lateinit means that it is not assigned when the object is created
     lateinit var activityApplyThemeBinding: ActivityApplyThemeBinding
-    var path: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +37,10 @@ class ApplyThemeActivity : AppCompatActivity() {
 
         // Click "Apply Theme"
         activityApplyThemeBinding.mbApplyTheme.setOnClickListener { l: View? ->
-
-            if (path == null) {
+            val path = activityApplyThemeBinding.mbManualEntry.editText!!.text.toString()
+            if (path.isEmpty()) {
                 Snackbar.make(l!!, " ! 你还没有选择文件 ! ", Snackbar.LENGTH_LONG).show()
-            } else if (!path!!.endsWith(".mtz")) {
+            } else if (!path.endsWith(".mtz")) {
                 Snackbar.make(l!!, " ! 你选择的不是主题（mtz）文件 ! ", Snackbar.LENGTH_LONG).show()
             } else {
                 if (ThemeUtils.applyTheme(this, path)) {
@@ -49,7 +48,6 @@ class ApplyThemeActivity : AppCompatActivity() {
                 }
 
                 // TODO: Delete this?
-                path = null
                 activityApplyThemeBinding.tvFilePath.text = ""
             }
         }
@@ -67,15 +65,16 @@ class ApplyThemeActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 7 && resultCode == Activity.RESULT_OK) {
-            val path = data?.data?.path
+            var path = data?.data?.path
 
             // Build the absolutely path of theme file.
             val filePathSpiltArray = path!!.split(":")
             val filePathSpilt = path.substring(filePathSpiltArray[0].length + 1)
-            this.path = Environment.getExternalStorageDirectory().path + "/" + filePathSpilt
+            path = Environment.getExternalStorageDirectory().path + "/" + filePathSpilt
 
-            activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n${this.path}" +
-                if (!this.path!!.endsWith(".mtz")) "\n\n ! 但它不是主题（mtz）文件 ! " else ""
+            activityApplyThemeBinding.mbManualEntry.editText!!.setText(path)
+            activityApplyThemeBinding.tvFilePath.text =
+                if (!path.endsWith(".mtz")) "\n\n ! 你选择的文件不是主题（mtz）文件 ! " else ""
         }
     }
 }

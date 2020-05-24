@@ -10,6 +10,7 @@
     <string name="how_to_use">使用步骤</string>
     <string name="step_1">(1.) 点击按钮，选择你需要应用的主题. </string>
     <string name="select_file">选择文件</string>
+    <string name="mb_manual_entry">或者手动输入文件路径</string>
     <string name="step_2">(2.) 点击 \"应用主题\" 按钮. </string>
     <!-- string name = "apply_theme" -->
 
