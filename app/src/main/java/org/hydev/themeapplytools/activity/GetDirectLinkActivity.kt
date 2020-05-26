@@ -1,5 +1,6 @@
 package org.hydev.themeapplytools.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,19 @@ class GetDirectLinkActivity : AppCompatActivity() {
 
         val self = this
 
+        val sharePreferences = getPreferences(Context.MODE_PRIVATE)
+        var miui12Mode = sharePreferences.getBoolean("miui_12_mode", false)
+        if (miui12Mode) {
+            activityGetDirectLinkBinding.mcbMiui12.isChecked = true
+        }
+
+        activityGetDirectLinkBinding.mcbMiui12.setOnCheckedChangeListener { _, isChecked ->
+            run {
+                sharePreferences.edit().putBoolean("miui_12_mode", isChecked).apply()
+                miui12Mode = isChecked
+            }
+        }
+
         // Get theme share link and get theme info to show.
         activityGetDirectLinkBinding.mbGetDirectLink.setOnClickListener {
             val inputShareLink = activityGetDirectLinkBinding.tilInputThemeLink.editText!!.text.toString()
@@ -41,8 +55,13 @@ class GetDirectLinkActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            var miuiVersion = "V11"
+            if (miui12Mode) {
+                miuiVersion = "V12"
+            }
+
             // Download
-            ThemeUtils.getThemeDownloadLinkAsync(inputShareLink, object : Callback {
+            ThemeUtils.getThemeDownloadLinkAsync(inputShareLink, miuiVersion, object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     alertInfo(self, "错误", "获取直链失败,\n请检查网络连接后重试.")
                 }

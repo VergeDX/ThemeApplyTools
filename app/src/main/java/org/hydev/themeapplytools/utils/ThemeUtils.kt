@@ -73,11 +73,12 @@ object ThemeUtils {
      * it will be show a dialog and return.
      *
      * @param themeShareLink MIUI theme share link.
+     * @param miuiVersion only can be V10, V11, V12
      * @param callback       operation when after get HTTP request.
      */
-    fun getThemeDownloadLinkAsync(themeShareLink: String, callback: Callback) {
+    fun getThemeDownloadLinkAsync(themeShareLink: String, miuiVersion: String, callback: Callback) {
         val themeToken = themeShareLink.split("/detail/".toRegex())[1].substring(0, 36)
-        val request = Request.Builder().url("$THEME_API_URL$themeToken?miuiUIVersion=V11").build()
+        val request = Request.Builder().url("$THEME_API_URL$themeToken?miuiUIVersion=$miuiVersion").build()
         OkHttpClient().newCall(request).enqueue(callback)
     }
 

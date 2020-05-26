@@ -38,6 +38,15 @@
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/mcb_miui_12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="21dp"
+        android:paddingHorizontal="7dp"
+        android:text="@string/miui_12_mode"
+        android:textSize="17sp" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mb_getDirectLink"
         android:layout_width="match_parent"
