@@ -17,6 +17,7 @@
     <string name="please_input_theme_link_below">请在下方输入主题链接</string>
     <string name="miui_theme_link_or_text">MIUI 主题分享链接 / 文字</string>
     <string name="miui_12_mode">MIUI 12 主题获取</string>
+    <string name="not_in_mainland">注：由于 MIUI 官方借口限制，\n非中国大陆 ip 无法获取！</string>
     <string name="get_info_or_download_file">获取信息 / 下载文件</string>
     <string name="theme_share_site">主题分享站</string>
     <string name="warning_about_vpn">（警告：大部分站点需要爬墙）</string>

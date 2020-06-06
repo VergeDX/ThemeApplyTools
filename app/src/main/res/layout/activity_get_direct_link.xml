@@ -47,6 +47,15 @@
         android:text="@string/miui_12_mode"
         android:textSize="17sp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="21dp"
+        android:layout_marginBottom="7dp"
+        android:paddingHorizontal="7dp"
+        android:text="@string/not_in_mainland"
+        android:textSize="17sp" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mb_getDirectLink"
         android:layout_width="match_parent"
