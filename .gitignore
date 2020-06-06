@@ -90,3 +90,7 @@ lint/tmp/
 
 # IDEA
 .idea/
+
+# Build
+app/debug
+app/release
