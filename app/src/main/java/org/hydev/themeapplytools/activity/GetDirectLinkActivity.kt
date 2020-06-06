@@ -35,10 +35,8 @@ class GetDirectLinkActivity : AppCompatActivity() {
         }
 
         activityGetDirectLinkBinding.mcbMiui12.setOnCheckedChangeListener { _, isChecked ->
-            run {
-                sharePreferences.edit().putBoolean("miui_12_mode", isChecked).apply()
-                miui12Mode = isChecked
-            }
+            sharePreferences.edit().putBoolean("miui_12_mode", isChecked).apply()
+            miui12Mode = isChecked
         }
 
         // Get theme share link and get theme info to show.
@@ -69,7 +67,7 @@ class GetDirectLinkActivity : AppCompatActivity() {
                 override fun onResponse(call: Call, response: Response) {
                     val info = ThemeUtils.getThemeInfo(response.body)
 
-                    if (info == null) alertInfo(self, "失败", "获取主题信息失败,\n可能是链接输入错误\n(在国外的话好像不能获取).")
+                    if (info == null) alertInfo(self, "失败", "获取主题信息失败,\n可能是链接输入错误\n或是使用了中国大陆外的 ip")
                     else {
                         val url = info.getDownloadUrl()
 
