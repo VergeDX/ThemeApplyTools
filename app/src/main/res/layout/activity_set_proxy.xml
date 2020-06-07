@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="21dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="9dp"
+        android:drawableStart="@drawable/ic_baseline_send_24"
+        android:drawablePadding="7dp"
+        android:text="设置代理"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:autoLink="all"
+        android:text="由于小米官方的限制 \n非中国大陆地区 ip 无法直接获取 \n故提供了简单的内置代理选项 \n你可以在这里找到中国地区的代理： \nhttps://www.xicidaili.com/nt/"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_proxy_address"
+            android:layout_width="231dp"
+            android:layout_height="match_parent"
+            android:hint="代理服务器地址">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="0123456789."
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="13dp"
+            android:text=":"
+            android:textSize="24sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_proxy_port"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="端口号">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:checkedButton="@id/rb_socks"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="代理方式："
+            android:textSize="19sp" />
+
+        <RadioGroup
+            android:id="@+id/rg_proxy_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_socks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="9dp"
+                android:text="Socks 4 / 5" />
+
+            <RadioButton
+                android:id="@+id/rb_http"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="HTTP" />
+        </RadioGroup>
+    </RadioGroup>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mb_test_proxy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="测试代理可用性"
+        app:icon="@drawable/ic_baseline_send_24"
+        app:iconGravity="textStart" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mb_save_proxy_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="保存代理设置"
+        app:icon="@drawable/ic_baseline_save_24"
+        app:iconGravity="textStart" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mb_clean_config"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" 清空配置"
+        app:icon="@drawable/ic_baseline_delete_sweep_24"
+        app:iconGravity="textStart" />
+</LinearLayout>

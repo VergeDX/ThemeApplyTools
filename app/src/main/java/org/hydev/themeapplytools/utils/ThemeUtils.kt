@@ -20,6 +20,7 @@ import okhttp3.Request
 import okhttp3.ResponseBody
 import org.hydev.themeapplytools.utils.FileUtils.alert
 import org.hydev.themeapplytools.utils.FileUtils.alertInfo
+import java.net.Proxy
 import java.net.URLDecoder
 import java.util.*
 
@@ -76,10 +77,14 @@ object ThemeUtils {
      * @param miuiVersion only can be V10, V11, V12
      * @param callback       operation when after get HTTP request.
      */
-    fun getThemeDownloadLinkAsync(themeShareLink: String, miuiVersion: String, callback: Callback) {
+    fun getThemeDownloadLinkAsync(themeShareLink: String, miuiVersion: String, callback: Callback, proxy: Proxy? = null) {
+        val okHttpClient =
+                if (proxy == null) OkHttpClient()
+                else OkHttpClient.Builder().proxy(proxy).build()
+
         val themeToken = themeShareLink.split("/detail/".toRegex())[1].substring(0, 36)
         val request = Request.Builder().url("$THEME_API_URL$themeToken?miuiUIVersion=$miuiVersion").build()
-        OkHttpClient().newCall(request).enqueue(callback)
+        okHttpClient.newCall(request).enqueue(callback)
     }
 
     /**

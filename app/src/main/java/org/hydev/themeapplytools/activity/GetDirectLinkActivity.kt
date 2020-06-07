@@ -1,7 +1,9 @@
 package org.hydev.themeapplytools.activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -14,6 +16,8 @@ import org.hydev.themeapplytools.utils.*
 import org.hydev.themeapplytools.utils.FileUtils.alert
 import org.hydev.themeapplytools.utils.FileUtils.alertInfo
 import java.io.IOException
+import java.net.InetSocketAddress
+import java.net.Proxy
 
 class GetDirectLinkActivity : AppCompatActivity() {
     val EXAMPLE_THEME_LINK = "http://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa"
@@ -29,14 +33,22 @@ class GetDirectLinkActivity : AppCompatActivity() {
         val self = this
 
         val sharePreferences = getPreferences(Context.MODE_PRIVATE)
+
+        // Get miui 12 mode value.
         var miui12Mode = sharePreferences.getBoolean("miui_12_mode", false)
         if (miui12Mode) {
             activityGetDirectLinkBinding.mcbMiui12.isChecked = true
         }
 
+        // Save miui 12 value instant.
         activityGetDirectLinkBinding.mcbMiui12.setOnCheckedChangeListener { _, isChecked ->
             sharePreferences.edit().putBoolean("miui_12_mode", isChecked).apply()
             miui12Mode = isChecked
+        }
+
+        activityGetDirectLinkBinding.mbSetProxy.setOnClickListener {
+            val intent = Intent(this, SetProxyActivity::class.java)
+            startActivity(intent)
         }
 
         // Get theme share link and get theme info to show.
@@ -56,6 +68,21 @@ class GetDirectLinkActivity : AppCompatActivity() {
             var miuiVersion = "V11"
             if (miui12Mode) {
                 miuiVersion = "V12"
+            }
+
+            val proxy: Proxy?
+            val proxyConfigSharedPreferences = getSharedPreferences("proxy_config", Context.MODE_PRIVATE)
+
+            val address = proxyConfigSharedPreferences.getString("proxy_address", "")
+            val port = proxyConfigSharedPreferences.getString("proxy_port", "")
+            val type = proxyConfigSharedPreferences.getString("proxy_type", "")
+            val proxyType = if (type == Proxy.Type.SOCKS.name) Proxy.Type.SOCKS else Proxy.Type.HTTP
+
+            // Input address or port is empty.
+            if (address!!.isEmpty() || port!!.isEmpty() || !Patterns.IP_ADDRESS.matcher(address).matches()) {
+                proxy = null
+            } else {
+                proxy = Proxy(proxyType, InetSocketAddress(address, port.toInt()))
             }
 
             // Download
@@ -88,7 +115,7 @@ class GetDirectLinkActivity : AppCompatActivity() {
                                 .show(self)
                     }
                 }
-            })
+            }, proxy)
         }
 
         // Share sites button
