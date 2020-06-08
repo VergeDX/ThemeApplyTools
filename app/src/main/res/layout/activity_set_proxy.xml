@@ -13,7 +13,7 @@
         android:layout_marginBottom="9dp"
         android:drawableStart="@drawable/ic_baseline_send_24"
         android:drawablePadding="7dp"
-        android:text="设置代理"
+        android:text="@string/set_proxy"
         android:textSize="19sp"
         android:textStyle="bold" />
 
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="9dp"
         android:autoLink="all"
-        android:text="由于小米官方的限制 \n非中国大陆地区 ip 无法直接获取 \n故提供了简单的内置代理选项 \n你可以在这里找到中国地区的代理： \nhttps://www.xicidaili.com/nt/"
+        android:text="@string/proxy_info"
         android:textSize="15sp" />
 
     <LinearLayout
@@ -34,7 +34,7 @@
             android:id="@+id/til_proxy_address"
             android:layout_width="231dp"
             android:layout_height="match_parent"
-            android:hint="代理服务器地址">
+            android:hint="@string/proxy_address">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:padding="13dp"
-            android:text=":"
+            android:text="@string/diver"
             android:textSize="24sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -56,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="端口号">
+            android:hint="@string/proxy_port">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="代理方式："
+            android:text="@string/proxy_method"
             android:textSize="19sp" />
 
         <RadioGroup
@@ -90,13 +90,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="9dp"
-                android:text="Socks 4 / 5" />
+                android:text="@string/method_socks4_5" />
 
             <RadioButton
                 android:id="@+id/rb_http"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="HTTP" />
+                android:text="@string/method_http" />
         </RadioGroup>
     </RadioGroup>
 
@@ -104,7 +104,7 @@
         android:id="@+id/mb_test_proxy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="测试代理可用性"
+        android:text="@string/test_proxy"
         app:icon="@drawable/ic_baseline_send_24"
         app:iconGravity="textStart" />
 
@@ -112,7 +112,7 @@
         android:id="@+id/mb_save_proxy_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="保存代理设置"
+        android:text="@string/save_proxy_config"
         app:icon="@drawable/ic_baseline_save_24"
         app:iconGravity="textStart" />
 
@@ -121,7 +121,7 @@
         android:id="@+id/mb_clean_config"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" 清空配置"
+        android:text="@string/clean_proxy_config"
         app:icon="@drawable/ic_baseline_delete_sweep_24"
         app:iconGravity="textStart" />
 </LinearLayout>

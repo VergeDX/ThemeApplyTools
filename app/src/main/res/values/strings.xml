@@ -17,8 +17,27 @@
     <string name="please_input_theme_link_below">请在下方输入主题链接</string>
     <string name="miui_theme_link_or_text">MIUI 主题分享链接 / 文字</string>
     <string name="miui_12_mode">MIUI 12 主题获取</string>
-    <string name="not_in_mainland">注：由于 MIUI 官方借口限制，\n非中国大陆 ip 无法获取！</string>
     <string name="get_info_or_download_file">获取信息 / 下载文件</string>
+    <string name="none_china_ip_set_proxy">非大陆 ip，设置代理服务器</string>
+
+    <string name="set_proxy">设置代理</string>
+    <string name="proxy_info">
+        由于小米官方的限制
+        \n非中国大陆地区 ip 无法直接获取
+        \n故提供了简单的内置代理选项
+        \n你可以在这里找到中国地区的代理：
+        \nhttps://www.xicidaili.com/nt/
+    </string>
+    <string name="proxy_address">代理服务器地址</string>
+    <string name="diver">:</string>
+    <string name="proxy_port">端口号</string>
+    <string name="proxy_method">代理方式：</string>
+    <string name="method_socks4_5">Socks 4 / 5</string>
+    <string name="method_http">HTTP</string>
+    <string name="test_proxy">测试代理可用性</string>
+    <string name="save_proxy_config">保存代理设置</string>
+    <string name="clean_proxy_config">清空配置</string>
+
     <string name="theme_share_site">主题分享站</string>
     <string name="warning_about_vpn">（警告：大部分站点需要爬墙）</string>
 

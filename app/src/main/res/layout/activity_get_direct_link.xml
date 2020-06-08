@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="21dp"
         android:layout_marginBottom="9dp"
-        android:text="非大陆 ip，设置代理服务器"
+        android:text="@string/none_china_ip_set_proxy"
         app:icon="@drawable/ic_baseline_send_24"
         app:iconGravity="textStart" />
 
