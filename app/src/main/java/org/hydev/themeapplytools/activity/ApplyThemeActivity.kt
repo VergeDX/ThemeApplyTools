@@ -2,7 +2,6 @@ package org.hydev.themeapplytools.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.content.Intent.EXTRA_LOCAL_ONLY
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -28,8 +27,8 @@ class ApplyThemeActivity : AppCompatActivity() {
         // Click "Choose File"
         activityApplyThemeBinding.mbChooseFile.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
             intent.type = "*/*"
-            intent.putExtra(EXTRA_LOCAL_ONLY, true)
 
             // It will call onActivityResult method, 7 is requestCode that distinguish request.
             startActivityForResult(intent, 7)
@@ -66,8 +65,14 @@ class ApplyThemeActivity : AppCompatActivity() {
         if (requestCode == 7 && resultCode == Activity.RESULT_OK) {
             path = ContentUriUtils.getFilePath(this, data?.data!!)
 
-            activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$path" +
-                    if (!path!!.endsWith(".mtz")) "\n\n ! 但它不是主题（mtz）文件 ! " else ""
+            // Path maybe null if not select file from internal storage.
+            val flags = path?.endsWith(".mtz")
+            if (flags != null) {
+                activityApplyThemeBinding.tvFilePath.text = "你选择的文件是：\n\n$path" +
+                        if (!path!!.endsWith(".mtz")) "\n\n ! 但它不是主题（mtz）文件 ! " else ""
+            } else {
+                activityApplyThemeBinding.tvFilePath.text = "你需要在内部存储内选择该文件！ \n\n在选择时点击右上角 \n点击 “显示内部存储空间” \n之后在左侧 Tab 中选择"
+            }
         }
     }
 }
