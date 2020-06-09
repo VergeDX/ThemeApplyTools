@@ -61,7 +61,7 @@ class GetDirectLinkActivity : AppCompatActivity() {
             val inputShareLink = activityGetDirectLinkBinding.tilInputThemeLink.editText!!.text.toString()
             val themeLinkSplit = inputShareLink.split("/detail/")
 
-            if (themeLinkSplit.size != 2) {
+            if (themeLinkSplit.size != 2 || themeLinkSplit[1].length < 36) {
                 alert(this, "错误", "请输入主题的分享链接，例如：\n$EXAMPLE_THEME_LINK")
                         .negative("返回") {}
                         .positive("复制") { FileUtils.copyLink(this, EXAMPLE_THEME_LINK) }
@@ -88,8 +88,11 @@ class GetDirectLinkActivity : AppCompatActivity() {
             // Selected MIUI version string, used in api url.
             val miuiVersion = getCheckedMIUIVersion(sharePreferences, activityGetDirectLinkBinding).text.toString()
 
+            // Theme token, used to get theme.
+            val themeToken = themeLinkSplit[1].substring(0, 36)
+
             // Download
-            ThemeUtils.getThemeDownloadLinkAsync(inputShareLink, miuiVersion, object : Callback {
+            ThemeUtils.getThemeDownloadLinkAsync(themeToken, miuiVersion, object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     alertInfo(self, "错误", "获取直链失败 \n网络连接质量不佳")
                 }
