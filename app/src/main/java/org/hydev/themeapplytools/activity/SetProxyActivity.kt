@@ -94,6 +94,7 @@ class SetProxyActivity : AppCompatActivity() {
             val proxyType = if (selectedRadioButton == setProxyActivityBinding.rbSocks) Proxy.Type.SOCKS else Proxy.Type.HTTP
 
             saveProxySetting(address, port, proxyType)
+            Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show()
         }
 
         // Clean all proxy config.
@@ -111,7 +112,7 @@ class SetProxyActivity : AppCompatActivity() {
     }
 
     /**
-     * Save the proxy config and make a toast.
+     * Save the proxy config.
      *
      * @see Patterns.IP_ADDRESS
      * @see Proxy.Type
@@ -123,7 +124,5 @@ class SetProxyActivity : AppCompatActivity() {
         sharePreferences.edit().putString("proxy_address", address).apply()
         sharePreferences.edit().putString("proxy_port", port).apply()
         sharePreferences.edit().putString("proxy_type", typeString).apply()
-
-        Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show()
     }
 }
