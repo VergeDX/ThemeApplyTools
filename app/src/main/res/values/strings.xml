@@ -16,7 +16,7 @@
     <!-- string name = "get_direct_link" -->
     <string name="please_input_theme_link_below">请在下方输入主题链接</string>
     <string name="miui_theme_link_or_text">MIUI 主题分享链接 / 文字</string>
-    <string name="miui_12_mode">MIUI 12 主题获取</string>
+
     <string name="get_info_or_download_file">获取信息 / 下载文件</string>
     <string name="none_china_ip_set_proxy">非大陆 ip，设置代理服务器</string>
 

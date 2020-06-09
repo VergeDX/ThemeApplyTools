@@ -82,6 +82,7 @@ object ThemeUtils {
                 if (proxy == null) OkHttpClient()
                 else OkHttpClient.Builder().proxy(proxy).build()
 
+        // TODO: 20-6-9 If length < 36, will crash here!
         val themeToken = themeShareLink.split("/detail/".toRegex())[1].substring(0, 36)
         val request = Request.Builder().url("$THEME_API_URL$themeToken?miuiUIVersion=$miuiVersion").build()
         okHttpClient.newCall(request).enqueue(callback)

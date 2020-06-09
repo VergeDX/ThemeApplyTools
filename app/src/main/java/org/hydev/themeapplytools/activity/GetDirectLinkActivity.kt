@@ -2,8 +2,10 @@ package org.hydev.themeapplytools.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Patterns
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -34,16 +36,19 @@ class GetDirectLinkActivity : AppCompatActivity() {
 
         val sharePreferences = getPreferences(Context.MODE_PRIVATE)
 
-        // Get miui 12 mode value.
-        var miui12Mode = sharePreferences.getBoolean("miui_12_mode", false)
-        if (miui12Mode) {
-            activityGetDirectLinkBinding.mcbMiui12.isChecked = true
-        }
+        // Get selected miui version, and restore it.
+        val checkedMIUIVersion = getCheckedMIUIVersion(sharePreferences, activityGetDirectLinkBinding)
+        activityGetDirectLinkBinding.rgMiuiVersion.check(checkedMIUIVersion.id)
 
         // Save miui 12 value instant.
-        activityGetDirectLinkBinding.mcbMiui12.setOnCheckedChangeListener { _, isChecked ->
-            sharePreferences.edit().putBoolean("miui_12_mode", isChecked).apply()
-            miui12Mode = isChecked
+        activityGetDirectLinkBinding.rgMiuiVersion.setOnCheckedChangeListener { _, checkedId ->
+            run {
+                when (checkedId) {
+                    activityGetDirectLinkBinding.rbMiui10.id -> sharePreferences.edit().putString("miui_version", "v10").apply()
+                    activityGetDirectLinkBinding.rbMiui11.id -> sharePreferences.edit().putString("miui_version", "v11").apply()
+                    activityGetDirectLinkBinding.rbMiui12.id -> sharePreferences.edit().putString("miui_version", "v12").apply()
+                }
+            }
         }
 
         activityGetDirectLinkBinding.mbSetProxy.setOnClickListener {
@@ -65,11 +70,6 @@ class GetDirectLinkActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            var miuiVersion = "V11"
-            if (miui12Mode) {
-                miuiVersion = "V12"
-            }
-
             val proxy: Proxy?
             val proxyConfigSharedPreferences = getSharedPreferences("proxy_config", Context.MODE_PRIVATE)
 
@@ -85,16 +85,19 @@ class GetDirectLinkActivity : AppCompatActivity() {
                 proxy = Proxy(proxyType, InetSocketAddress(address, port.toInt()))
             }
 
+            // Selected MIUI version string, used in api url.
+            val miuiVersion = getCheckedMIUIVersion(sharePreferences, activityGetDirectLinkBinding).text.toString()
+
             // Download
             ThemeUtils.getThemeDownloadLinkAsync(inputShareLink, miuiVersion, object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    alertInfo(self, "错误", "获取直链失败,\n请检查网络连接后重试.")
+                    alertInfo(self, "错误", "获取直链失败 \n网络连接质量不佳")
                 }
 
                 override fun onResponse(call: Call, response: Response) {
                     val info = ThemeUtils.getThemeInfo(response.body)
 
-                    if (info == null) alertInfo(self, "失败", "获取主题信息失败,\n可能是链接输入错误\n或是使用了中国大陆外的 ip")
+                    if (info == null) alertInfo(self, "失败", "获取主题信息失败 \n可能的原因如下： \n1. 该主题没有 MIUI $miuiVersion 的版本 \n2. 你使用了中国大陆外的 ip \n3. 主题链接输入错误")
                     else {
                         val url = info.getDownloadUrl()
 
@@ -126,6 +129,21 @@ class GetDirectLinkActivity : AppCompatActivity() {
             materialAlertDialogBuilder.setView(dialogThemeShareBinding.root).setPositiveButton("OK", null)
             ThemeShareDialogUtils.setOnClickListener(this, dialogThemeShareBinding)
             materialAlertDialogBuilder.show()
+        }
+    }
+
+
+    fun getCheckedMIUIVersion(sharePreferences: SharedPreferences, activityGetDirectLinkBinding: ActivityGetDirectLinkBinding): RadioButton {
+        return when (sharePreferences.getString("miui_version", "v11")) {
+            "v10" -> activityGetDirectLinkBinding.rbMiui10
+            "v11" -> activityGetDirectLinkBinding.rbMiui11
+            "v12" -> activityGetDirectLinkBinding.rbMiui12
+
+            // Else, reset miui_version to default v11.
+            else -> kotlin.run {
+                sharePreferences.edit().putString("miui_version", "v11").apply()
+                activityGetDirectLinkBinding.rbMiui11
+            }
         }
     }
 }
