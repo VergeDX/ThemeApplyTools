@@ -91,16 +91,21 @@ class GetDirectLinkActivity : AppCompatActivity() {
             // Theme token, used to get theme.
             val themeToken = themeLinkSplit[1].substring(0, 36)
 
-            // Download
+            // Show progress dialog and post get theme info request.
+            val progressDialog = ProgressDialog.showDialog(this)
             ThemeUtils.getThemeDownloadLinkAsync(themeToken, miuiVersion, object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
+                    progressDialog.cancel()
                     alertInfo(self, "错误", "获取直链失败 \n网络连接质量不佳")
                 }
 
                 override fun onResponse(call: Call, response: Response) {
+                    progressDialog.cancel()
+
                     val info = ThemeUtils.getThemeInfo(response.body)
 
-                    if (info == null) alertInfo(self, "失败", "获取主题信息失败 \n可能的原因如下： \n1. 该主题没有 MIUI $miuiVersion 的版本 \n2. 你使用了中国大陆外的 ip \n3. 主题链接输入错误")
+                    if (info == null)
+                        alertInfo(self, "失败", "获取主题信息失败 \n可能的原因如下： \n1. 该主题没有 MIUI $miuiVersion 的版本 \n2. 你使用了中国大陆外的 ip \n3. 主题链接输入错误")
                     else {
                         val url = info.getDownloadUrl()
 

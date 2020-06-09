@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import okhttp3.*
 import org.hydev.themeapplytools.databinding.ActivitySetProxyBinding
+import org.hydev.themeapplytools.utils.ProgressDialog
 import org.hydev.themeapplytools.utils.ThemeUtils
 import java.io.IOException
 import java.net.InetSocketAddress
@@ -60,9 +61,13 @@ class SetProxyActivity : AppCompatActivity() {
                     .build()
             val request = Request.Builder().url(api_getIp).build()
 
+            // Show dialog and post request.
+            val progressDialog = ProgressDialog.showDialog(this)
             okHttpClient.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     runOnUiThread {
+                        progressDialog.cancel()
+
                         MaterialAlertDialogBuilder(this@SetProxyActivity)
                                 .setTitle("失败")
                                 .setMessage("测试失败\n无网络连接或代理不可用")
@@ -75,6 +80,8 @@ class SetProxyActivity : AppCompatActivity() {
                     val responseString = response.body?.string()
 
                     runOnUiThread {
+                        progressDialog.cancel()
+
                         MaterialAlertDialogBuilder(this@SetProxyActivity)
                                 .setTitle("成功")
                                 .setMessage("您当前的 ip 是：$responseString")
