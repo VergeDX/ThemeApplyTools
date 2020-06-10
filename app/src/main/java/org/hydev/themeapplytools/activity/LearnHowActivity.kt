@@ -9,6 +9,7 @@ class LearnHowActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Just inflate the layout, this is show-off view.
         val activityLearnHowBinding = ActivityLearnHowBinding.inflate(layoutInflater)
         setContentView(activityLearnHowBinding.root)
 

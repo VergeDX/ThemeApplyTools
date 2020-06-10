@@ -25,52 +25,54 @@ class SetProxyActivity : AppCompatActivity() {
         val setProxyActivityBinding = ActivitySetProxyBinding.inflate(layoutInflater)
         setContentView(setProxyActivityBinding.root)
 
-        // Restore user proxy config.
+        // Used to restore user proxy config.
         val sharePreferences: SharedPreferences = getSharedPreferences("proxy_config", Context.MODE_PRIVATE)
 
+        // Restore the proxy config.
         setProxyActivityBinding.tilProxyAddress.editText?.setText(sharePreferences.getString("proxy_address", ""))
         setProxyActivityBinding.tilProxyPort.editText?.setText(sharePreferences.getString("proxy_port", ""))
-
         when (sharePreferences.getString("proxy_type", "")) {
             Proxy.Type.SOCKS.name -> setProxyActivityBinding.rbSocks.isChecked = true
             Proxy.Type.HTTP.name -> setProxyActivityBinding.rbHttp.isChecked = true
-        }
 
-        val apiGetIp = "http://api.ip.sb/ip"
+            // Else, set config to default.
+            else -> sharePreferences.edit().putString("proxy_type", Proxy.Type.SOCKS.name).apply()
+        }
 
         // Test proxy button.
         setProxyActivityBinding.mbTestProxy.setOnClickListener {
+            // Get user selected proxy type, and input proxy address & port.
             val chosenProxyType = if (setProxyActivityBinding.rbSocks.isChecked) Proxy.Type.SOCKS else Proxy.Type.HTTP
-
-            val address = setProxyActivityBinding.tilProxyAddress.editText?.text.toString()
-            val port = setProxyActivityBinding.tilProxyPort.editText?.text.toString()
+            val inputAddress = setProxyActivityBinding.tilProxyAddress.editText?.text.toString()
+            val inputPort = setProxyActivityBinding.tilProxyPort.editText?.text.toString()
 
             // Input address or port is empty.
-            if (address.isEmpty() || port.isEmpty()) {
+            if (inputAddress.isEmpty() || inputPort.isEmpty()) {
                 Toast.makeText(this, "未输入完整的代理信息", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             // Input not ip address.
-            if (!Patterns.IP_ADDRESS.matcher(address).matches()) {
+            if (!Patterns.IP_ADDRESS.matcher(inputAddress).matches()) {
                 Toast.makeText(this, "输入的地址不是 ip！", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
+            // Normal condition, test proxy.
+            // Build client and request, request url can return ip address.
             val okHttpClient = OkHttpClient.Builder()
-                    .proxy(Proxy(chosenProxyType, InetSocketAddress(address, port.toInt())))
-                    .build()
-            val request = Request.Builder().url(apiGetIp).build()
+                    .proxy(Proxy(chosenProxyType, InetSocketAddress(inputAddress, inputPort.toInt()))).build()
+            val request = Request.Builder().url("http://api.ip.sb/ip").build()
 
             // Show dialog and post request.
             val progressDialog = ProgressDialog.showDialog(this)
             okHttpClient.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    runOnUiThread {
-                        progressDialog.cancel()
+                    progressDialog.cancel()
 
+                    runOnUiThread {
                         MaterialAlertDialogBuilder(this@SetProxyActivity)
                                 .setTitle("失败")
-                                .setMessage("测试失败\n无网络连接或代理不可用")
+                                .setMessage("测试失败 \n无网络连接或代理不可用")
                                 .setNegativeButton("返回", null)
                                 .show()
                     }
@@ -78,10 +80,9 @@ class SetProxyActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call, response: Response) {
                     val responseString = response.body?.string()
+                    progressDialog.cancel()
 
                     runOnUiThread {
-                        progressDialog.cancel()
-
                         MaterialAlertDialogBuilder(this@SetProxyActivity)
                                 .setTitle("成功")
                                 .setMessage("您当前的 ip 是：$responseString")
@@ -91,19 +92,18 @@ class SetProxyActivity : AppCompatActivity() {
                 }
             })
         }
-
         // Save proxy config button.
         setProxyActivityBinding.mbSaveProxySetting.setOnClickListener {
-            val address = setProxyActivityBinding.tilProxyAddress.editText?.text.toString()
-            val port = setProxyActivityBinding.tilProxyPort.editText?.text.toString()
-
+            // Get input address, port, selected radio button.
+            val inputAddress = setProxyActivityBinding.tilProxyAddress.editText?.text.toString()
+            val inputPort = setProxyActivityBinding.tilProxyPort.editText?.text.toString()
             val selectedRadioButton = findViewById<RadioButton>(setProxyActivityBinding.rgProxyType.checkedRadioButtonId)
-            val proxyType = if (selectedRadioButton == setProxyActivityBinding.rbSocks) Proxy.Type.SOCKS else Proxy.Type.HTTP
 
-            saveProxySetting(address, port, proxyType)
+            // Parse proxy type and save it.
+            val proxyType = if (selectedRadioButton == setProxyActivityBinding.rbSocks) Proxy.Type.SOCKS else Proxy.Type.HTTP
+            saveProxySetting(inputAddress, inputPort, proxyType)
             Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show()
         }
-
         // Clean all proxy config.
         setProxyActivityBinding.mbCleanConfig.setOnClickListener {
             // Clean the saved proxy config.
@@ -119,9 +119,8 @@ class SetProxyActivity : AppCompatActivity() {
     }
 
     /**
-     * Save the proxy config.
+     * Save the proxy config, using given address, port and proxy type.
      *
-     * @see Patterns.IP_ADDRESS
      * @see Proxy.Type
      */
     private fun saveProxySetting(address: String, port: String, type: Proxy.Type?) {

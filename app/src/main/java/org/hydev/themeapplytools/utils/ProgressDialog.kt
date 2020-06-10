@@ -6,7 +6,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.hydev.themeapplytools.R
 
 object ProgressDialog {
-
     fun showDialog(context: Context): AlertDialog {
         return MaterialAlertDialogBuilder(context)
                 .setView(R.layout.dialog_in_progress)
