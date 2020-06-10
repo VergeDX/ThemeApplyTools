@@ -13,7 +13,7 @@ import org.hydev.themeapplytools.utils.ThemeUtils
 
 class ApplyThemeActivity : AppCompatActivity() {
     // Lateinit means that it is not assigned when the object is created
-    lateinit var activityApplyThemeBinding: ActivityApplyThemeBinding
+    private lateinit var activityApplyThemeBinding: ActivityApplyThemeBinding
     var path: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

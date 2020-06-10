@@ -22,7 +22,7 @@ import java.net.InetSocketAddress
 import java.net.Proxy
 
 class GetDirectLinkActivity : AppCompatActivity() {
-    val EXAMPLE_THEME_LINK = "http://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa"
+    private val exampleThemeLink = "http://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +62,9 @@ class GetDirectLinkActivity : AppCompatActivity() {
             val themeLinkSplit = inputShareLink.split("/detail/")
 
             if (themeLinkSplit.size != 2 || themeLinkSplit[1].length < 36) {
-                alert(this, "错误", "请输入主题的分享链接，例如：\n$EXAMPLE_THEME_LINK")
+                alert(this, "错误", "请输入主题的分享链接，例如：\n$exampleThemeLink")
                         .negative("返回") {}
-                        .positive("复制") { FileUtils.copyLink(this, EXAMPLE_THEME_LINK) }
+                        .positive("复制") { FileUtils.copyLink(this, exampleThemeLink) }
                         .show(this)
 
                 return@setOnClickListener
@@ -79,10 +79,10 @@ class GetDirectLinkActivity : AppCompatActivity() {
             val proxyType = if (type == Proxy.Type.SOCKS.name) Proxy.Type.SOCKS else Proxy.Type.HTTP
 
             // Input address or port is empty.
-            if (address!!.isEmpty() || port!!.isEmpty() || !Patterns.IP_ADDRESS.matcher(address).matches()) {
-                proxy = null
+            proxy = if (address!!.isEmpty() || port!!.isEmpty() || !Patterns.IP_ADDRESS.matcher(address).matches()) {
+                null
             } else {
-                proxy = Proxy(proxyType, InetSocketAddress(address, port.toInt()))
+                Proxy(proxyType, InetSocketAddress(address, port.toInt()))
             }
 
             // Selected MIUI version string, used in api url.
@@ -140,8 +140,7 @@ class GetDirectLinkActivity : AppCompatActivity() {
         }
     }
 
-
-    fun getCheckedMIUIVersion(sharePreferences: SharedPreferences, activityGetDirectLinkBinding: ActivityGetDirectLinkBinding): RadioButton {
+    private fun getCheckedMIUIVersion(sharePreferences: SharedPreferences, activityGetDirectLinkBinding: ActivityGetDirectLinkBinding): RadioButton {
         return when (sharePreferences.getString("miui_version", "v11")) {
             "v10" -> activityGetDirectLinkBinding.rbMiui10
             "v11" -> activityGetDirectLinkBinding.rbMiui11

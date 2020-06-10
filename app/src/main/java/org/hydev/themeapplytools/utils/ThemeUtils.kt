@@ -73,7 +73,7 @@ object ThemeUtils {
      * if theme share link does not match,
      * it will be show a dialog and return.
      *
-     * @param themeShareLink MIUI theme share link.
+     * @param themeToken MIUI theme token.
      * @param miuiVersion only can be V10, V11, V12
      * @param callback       operation when after get HTTP request.
      */
@@ -100,7 +100,7 @@ object ThemeUtils {
         fun getDownloadUrl(): String = URLDecoder.decode(downloadUrl, "UTF-8")
         fun getFileHash() = (if (fileHash.isEmpty()) "暂无" else fileHash).toUpperCase(Locale.ROOT)
         fun getFileSize() = String.format(Locale.CHINESE, "%.2f", fileSize / 10e5) + " MB"
-        fun getFileName() = URLDecoder.decode(downloadUrl.split("/").last(), "UTF-8")
+        fun getFileName(): String = URLDecoder.decode(downloadUrl.split("/").last(), "UTF-8")
     }
 
     /**

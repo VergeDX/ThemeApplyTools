@@ -36,7 +36,7 @@ class SetProxyActivity : AppCompatActivity() {
             Proxy.Type.HTTP.name -> setProxyActivityBinding.rbHttp.isChecked = true
         }
 
-        val api_getIp = "http://api.ip.sb/ip"
+        val apiGetIp = "http://api.ip.sb/ip"
 
         // Test proxy button.
         setProxyActivityBinding.mbTestProxy.setOnClickListener {
@@ -59,7 +59,7 @@ class SetProxyActivity : AppCompatActivity() {
             val okHttpClient = OkHttpClient.Builder()
                     .proxy(Proxy(chosenProxyType, InetSocketAddress(address, port.toInt())))
                     .build()
-            val request = Request.Builder().url(api_getIp).build()
+            val request = Request.Builder().url(apiGetIp).build()
 
             // Show dialog and post request.
             val progressDialog = ProgressDialog.showDialog(this)

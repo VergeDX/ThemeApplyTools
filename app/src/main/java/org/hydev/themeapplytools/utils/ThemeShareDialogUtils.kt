@@ -6,11 +6,11 @@ import android.net.Uri
 import org.hydev.themeapplytools.databinding.DialogThemeShareBinding
 
 object ThemeShareDialogUtils {
-    const val THEME_OFFICIAL_URL = "http://zhuti.xiaomi.com/"
-    const val THEMES_TK_URL = "https://miuithemes.tk/"
-    const val TECH_RUCHI_URL = "http://www.techrushi.com/"
-    const val THEME_XIAOMIS_URL = "https://miuithemesxiaomis.blogspot.com/"
-    const val XIAOMI_THEMEZ_URL = "https://www.miuithemez.com/"
+    private const val THEME_OFFICIAL_URL = "http://zhuti.xiaomi.com/"
+    private const val THEMES_TK_URL = "https://miuithemes.tk/"
+    private const val TECH_RUCHI_URL = "http://www.techrushi.com/"
+    private const val THEME_XIAOMIS_URL = "https://miuithemesxiaomis.blogspot.com/"
+    private const val XIAOMI_THEMEZ_URL = "https://www.miuithemez.com/"
 
     fun setOnClickListener(activity: Activity, dialogThemeShareBinding: DialogThemeShareBinding) {
         dialogThemeShareBinding.btOfficialStore.setOnClickListener { openBrowser(activity, THEME_OFFICIAL_URL) }
