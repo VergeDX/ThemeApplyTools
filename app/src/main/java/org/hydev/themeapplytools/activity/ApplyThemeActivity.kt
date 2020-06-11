@@ -134,5 +134,3 @@ class ApplyThemeActivity : AppCompatActivity() {
         }
     }
 }
-
-// TODO: 20-6-10 Maybe I can remove READ_EXTERNAL_STORAGE permission...?
