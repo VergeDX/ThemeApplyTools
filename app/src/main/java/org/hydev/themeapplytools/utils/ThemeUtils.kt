@@ -151,6 +151,7 @@ object ThemeUtils {
 
         // If not in the dark mode, set status bar color to black.
         if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+            // TODO: 20-8-2 Fix this.
             activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
     }
