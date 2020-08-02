@@ -97,7 +97,7 @@ class GetDirectLinkActivity : AppCompatActivity() {
             else Proxy(proxyType, InetSocketAddress(address, port.toInt()))
 
             // Get selected MIUI version radio button,
-            // then cast it to string, so we can used it in api.
+            // then cast it to string, so we can use it in api.
             val miuiVersion = getCheckedMIUIVersion(sharePreferences, activityGetDirectLinkBinding).text.toString()
             // Theme token, used to get theme. At here, theme token is exist.
             val themeToken = themeLinkSplit[1].substring(0, 36)

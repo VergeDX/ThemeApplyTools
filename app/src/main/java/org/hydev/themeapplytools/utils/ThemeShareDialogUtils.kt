@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import org.hydev.themeapplytools.databinding.DialogThemeShareBinding
 
+@Suppress("SpellCheckingInspection")
 object ThemeShareDialogUtils {
     private const val THEME_OFFICIAL_URL = "http://zhuti.xiaomi.com/"
     private const val THEMES_TK_URL = "https://miuithemes.tk/"

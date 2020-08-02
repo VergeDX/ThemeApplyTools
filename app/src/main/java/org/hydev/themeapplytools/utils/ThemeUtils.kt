@@ -33,6 +33,7 @@ object ThemeUtils {
     fun applyTheme(activity: Activity, filePath: String?): Int {
         // The information of MIUI theme manager. If not exist, return code -1.
         val themeManagerAppInfo: ApplicationInfo = try {
+            @Suppress("SpellCheckingInspection")
             activity.packageManager.getApplicationInfo("com.android.thememanager", 0)
         } catch (e: PackageManager.NameNotFoundException) {
             return -1
@@ -47,6 +48,8 @@ object ThemeUtils {
         val intent = Intent().apply {
             action = Intent.ACTION_MAIN
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+            @Suppress("SpellCheckingInspection")
             component = ComponentName("com.android.thememanager", "com.android.thememanager.ApplyThemeForScreenshot")
         }
         val bundle = Bundle().apply {

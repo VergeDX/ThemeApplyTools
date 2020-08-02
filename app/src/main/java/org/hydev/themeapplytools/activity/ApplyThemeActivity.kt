@@ -71,6 +71,8 @@ class ApplyThemeActivity : AppCompatActivity() {
                                 // then make toast tell user to enable it.
                                 val intent = Intent().apply {
                                     action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+
+                                    @file:Suppress("SpellCheckingInspection")
                                     data = Uri.parse("package:com.android.thememanager")
                                 }
 
