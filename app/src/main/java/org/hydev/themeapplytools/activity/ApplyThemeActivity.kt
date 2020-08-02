@@ -19,7 +19,7 @@ class ApplyThemeActivity : AppCompatActivity() {
     // View-binding
     private lateinit var activityApplyThemeBinding: ActivityApplyThemeBinding
 
-    // Chosen file path
+    // Chosen file path, ContentUriUtils.getFilePath() return a nullable value.
     private var filePath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,14 +112,20 @@ class ApplyThemeActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        // TODO: 20-6-10 Using Quantity Strings instead, see https://developer.android.com/guide/topics/resources/string-resource.
+        @SuppressLint("SetTextI18n")
+
         if (requestCode == 7 && resultCode == Activity.RESULT_OK) {
-            filePath = ContentUriUtils.getFilePath(this, data?.data!!)
+            filePath = try {
+                ContentUriUtils.getFilePath(this, data?.data!!)
+            } catch (e: RuntimeException) {
+                activityApplyThemeBinding.tvFilePath.text = "解析文件路径时发生错误 \n" +
+                        "请尝试在内部存储中选择文件"
+                return
+            }
 
             // Path maybe null if not select file from internal storage.
             val isMtzFile = filePath?.endsWith(".mtz")
-
-            // TODO: 20-6-10 Using Quantity Strings instead, see https://developer.android.com/guide/topics/resources/string-resource.
-            @SuppressLint("SetTextI18n")
 
             if (isMtzFile != null) {
                 // Show chosen file path, if it not mtz file, append text.
@@ -128,7 +134,7 @@ class ApplyThemeActivity : AppCompatActivity() {
             } else {
                 // User not choose the file from internal storage.
                 activityApplyThemeBinding.tvFilePath.text =
-                        "你需要在内部存储内选择该文件！ \n" +
+                        "你需要在内部存储中选择该文件！ \n" +
                                 "\n在选择时点击右上角 " +
                                 "\n点击 “显示内部存储空间” " +
                                 "\n之后在左侧 Tab 中选择"
