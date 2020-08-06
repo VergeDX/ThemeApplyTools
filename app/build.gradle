@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "org.hydev.new.themeapplytools"
-        minSdkVersion 26
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 24
         versionName '2.6.1'
