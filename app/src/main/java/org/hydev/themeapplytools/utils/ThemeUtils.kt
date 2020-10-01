@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.view.View
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration.Companion.Stable
 import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -133,7 +132,7 @@ object ThemeUtils {
      */
     fun parseThemeInfo(responseString: String): MiuiTheme.MiuiThemeData? {
         return try {
-            Json(Stable).parse(MiuiTheme.serializer(), responseString).apiData
+            Json { allowStructuredMapKeys = true }.decodeFromString(MiuiTheme.serializer(), responseString).apiData
         } catch (e: Exception) {
             null
         }
