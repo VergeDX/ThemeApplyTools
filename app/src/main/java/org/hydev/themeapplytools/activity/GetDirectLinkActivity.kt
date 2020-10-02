@@ -54,13 +54,9 @@ class GetDirectLinkActivity : AppCompatActivity() {
         activityGetDirectLinkBinding.mbGetDirectLink.setOnClickListener {
             // Get user input, and split it.
             val inputShareLink = activityGetDirectLinkBinding.tilInputThemeLink.editText!!.text.toString()
-            val themeLinkSplit = inputShareLink.split("/detail/")
+            val themeToken = ThemeUtils.parseThemeToken(inputShareLink)
 
-            // If split array size != 2, or array[1]'s length < 36,
-            // means user not input theme link or theme link text.
-            // By the way, the text of "《Pure 轻雨》这个主题不错，推荐一下。下载地址: http://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa ，来自 @MIUI"
-            // are also acceptable.
-            if (themeLinkSplit.size != 2 || themeLinkSplit[1].length < 36) {
+            if (themeToken.isEmpty()) {
                 // Wrong theme share link, show dialog and return.
                 MaterialAlertDialogBuilder(this)
                         .setTitle("错误")
@@ -99,8 +95,6 @@ class GetDirectLinkActivity : AppCompatActivity() {
             // Get selected MIUI version radio button,
             // then cast it to string, so we can use it in api.
             val miuiVersion = getCheckedMIUIVersion(sharePreferences, activityGetDirectLinkBinding).text.toString()
-            // Theme token, used to get theme. At here, theme token is exist.
-            val themeToken = themeLinkSplit[1].substring(0, 36)
 
             // Show progress dialog and post get theme info request.
             // save alert dialog object, so we can cancel it.

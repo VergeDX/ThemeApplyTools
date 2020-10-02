@@ -154,4 +154,34 @@ object ThemeUtils {
             activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
     }
+
+    /**
+     * Get miui theme token from theme share link or text, the following text are also acceptable:
+     *
+     * "《Pure 轻雨》这个主题不错，推荐一下。下载地址: http://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa ，来自 @MIUI"
+     * "《Mine》这个主题不错，强烈推荐～下载地址: http://zhuti.xiaomi.com/detail/share/b797e0cf-e775-4824-a21c-44fa2728db84?miref=share&packId=def53eb6-daea-495e-8061-dbda0826ede8 ，来自@小米主题"
+     *
+     * @param themeShareText
+     * @return theme token, if parse error, return empty string.
+     */
+    fun parseThemeToken(themeShareText: String): String {
+        // Using themeLinkSplit[1] below, so default list length should be 2.
+        var themeLinkSplit = listOf("", "")
+
+        // 2020.10.2 update: theme share link now like this:
+        // http://zhuti.xiaomi.com/detail/share/b797e0cf-e775-4824-a21c-44fa2728db84?miref=share&packId=def53eb6-daea-495e-8061-dbda0826ede8
+        // def53eb6-daea-495e-8061-dbda0826ede8 is real theme token, length is also 36.
+        if ("&packId=" in themeShareText) {
+            // if contains, means new share link.
+            themeLinkSplit = themeShareText.split("&packId=")
+        } else if ("/detail/" in themeShareText) {
+            // Old theme share link method, share link like this:
+            // http://zhuti.xiaomi.com/detail/d555981b-e6af-4ea9-9eb2-e47cfbc3edfa
+            // d555981b-e6af-4ea9-9eb2-e47cfbc3edfa is the theme token.
+            themeLinkSplit = themeShareText.split("/detail/")
+        }
+
+        return if (themeLinkSplit[1].length < 36) ""
+        else themeLinkSplit[1].substring(0, 36)
+    }
 }
