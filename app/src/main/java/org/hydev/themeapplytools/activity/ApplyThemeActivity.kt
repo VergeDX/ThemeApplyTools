@@ -86,9 +86,11 @@ class ApplyThemeActivity : AppCompatActivity() {
                 // 0, means posted apply theme intent.
                 0 -> MaterialAlertDialogBuilder(this)
                         .setTitle("完成")
-                        .setMessage("应用主题成功！ " +
-                                "\n若主题商店版本较旧" +
-                                "\n可能会没有效果")
+                        .setMessage("""
+                            应用主题成功！
+                            若主题商店版本较旧 / 较新
+                            可能会没有效果
+                        """.trimIndent())
                         .setPositiveButton("确定", null)
                         .show()
 
@@ -119,8 +121,11 @@ class ApplyThemeActivity : AppCompatActivity() {
             filePath = try {
                 ContentUriUtils.getFilePath(this, data?.data!!)
             } catch (e: RuntimeException) {
-                activityApplyThemeBinding.tvFilePath.text = "解析文件路径时发生错误 \n" +
-                        "请尝试在内部存储中选择文件"
+                activityApplyThemeBinding.tvFilePath.text = """
+                    解析文件路径时发生错误
+                    请尝试在内部存储中选择文件
+                """.trimIndent()
+
                 return
             }
 
@@ -129,15 +134,22 @@ class ApplyThemeActivity : AppCompatActivity() {
 
             if (isMtzFile != null) {
                 // Show chosen file path, if it not mtz file, append text.
-                activityApplyThemeBinding.tvFilePath.text = "你选择的文件是： \n\n$filePath" +
-                        if (!isMtzFile) "\n\n ! 但它不是主题（mtz）文件 ! " else ""
+                activityApplyThemeBinding.tvFilePath.text = """
+                    你选择的文件是：
+                    
+                    $filePath
+                    
+                    ${if (!isMtzFile) " ! 但它不是主题（mtz）文件 ! " else ""}
+                """.trimIndent()
+
             } else {
                 // User not choose the file from internal storage.
-                activityApplyThemeBinding.tvFilePath.text =
-                        "你需要在内部存储中选择该文件！ \n" +
-                                "\n在选择时点击右上角 " +
-                                "\n点击 “显示内部存储空间” " +
-                                "\n之后在左侧 Tab 中选择"
+                activityApplyThemeBinding.tvFilePath.text = """
+                    你需要在内部存储中选择该文件！
+                    在选择时点击右上角
+                    点击 “显示内部存储空间”
+                    之后在左侧 Tab 中选择主题文件
+                """.trimIndent()
             }
         }
     }

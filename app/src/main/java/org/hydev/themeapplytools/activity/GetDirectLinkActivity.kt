@@ -60,7 +60,10 @@ class GetDirectLinkActivity : AppCompatActivity() {
                 // Wrong theme share link, show dialog and return.
                 MaterialAlertDialogBuilder(this)
                         .setTitle("错误")
-                        .setMessage("请输入主题的分享链接，例如： \n$exampleThemeLink")
+                        .setMessage("""
+                            请输入主题的分享链接，例如：
+                            $exampleThemeLink
+                        """.trimIndent())
                         .setNegativeButton("返回", null)
                         .setPositiveButton("复制") { _, _ ->
                             run {
@@ -106,7 +109,10 @@ class GetDirectLinkActivity : AppCompatActivity() {
                     runOnUiThread {
                         MaterialAlertDialogBuilder(this@GetDirectLinkActivity)
                                 .setTitle("错误")
-                                .setMessage("获取直链失败 \n网络连接质量不佳")
+                                .setMessage("""
+                                    获取直链失败
+                                    有可能是网络原因
+                                """.trimIndent())
                                 .setNegativeButton("返回", null)
                                 .show()
                     }
@@ -220,5 +226,3 @@ class GetDirectLinkActivity : AppCompatActivity() {
         }
     }
 }
-
-// TODO: 20-6-10 Using """text""" in all multi-line text context.

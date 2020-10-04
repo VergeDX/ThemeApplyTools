@@ -72,7 +72,10 @@ class SetProxyActivity : AppCompatActivity() {
                     runOnUiThread {
                         MaterialAlertDialogBuilder(this@SetProxyActivity)
                                 .setTitle("失败")
-                                .setMessage("测试失败 \n无网络连接或代理不可用")
+                                .setMessage("""
+                                    测试失败
+                                    无网络连接或代理不可用
+                                """.trimIndent())
                                 .setNegativeButton("返回", null)
                                 .show()
                     }
