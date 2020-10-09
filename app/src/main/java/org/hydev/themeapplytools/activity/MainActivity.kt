@@ -8,6 +8,11 @@ import org.hydev.themeapplytools.utils.ThemeShareDialogUtils.openBrowser
 import org.hydev.themeapplytools.utils.ThemeUtils
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        private const val GITHUB_REPO_URL = "https://github.com/VergeDX/ThemeApplyTools"
+        private const val COOLAPK_ME_HOMEPAGE = "https://coolapk.com/u/506843"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -20,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.mcvApply.setOnClickListener { startActivity(Intent(this, ApplyThemeActivity::class.java)) }
         activityMainBinding.mcvGetDirectLink.setOnClickListener { startActivity(Intent(this, GetDirectLinkActivity::class.java)) }
         activityMainBinding.mcvLearnHow.setOnClickListener { startActivity(Intent(this, LearnHowActivity::class.java)) }
-        activityMainBinding.mcvExploreGithub.setOnClickListener { openBrowser(this, "https://github.com/VergeDX/ThemeApplyTools") }
-        activityMainBinding.mcvMeInCoolapk.setOnClickListener { openBrowser(this, "https://coolapk.com/u/506843") }
+        activityMainBinding.mcvExploreGithub.setOnClickListener { openBrowser(this, GITHUB_REPO_URL) }
+        activityMainBinding.mcvMeInCoolapk.setOnClickListener { openBrowser(this, COOLAPK_ME_HOMEPAGE) }
     }
 }

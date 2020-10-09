@@ -68,4 +68,11 @@
     <string name="techruchi_com">techruchi.com</string>
     <string name="miui_themes_xiaomis">MIUI Themes Xiaomis</string>
     <string name="miui_themez">Miui Themez</string>
+
+    <string name="miui_version">MIUI 版本：</string>
+    <string name="miui_version_v10">v10</string>
+    <string name="miui_version_v11">v11</string>
+    <string name="miui_version_v12">v12</string>
+
+    <string name="process_please_wait">正在处理中, 请稍候…</string>
 </resources>

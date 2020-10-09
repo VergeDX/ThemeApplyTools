@@ -19,7 +19,6 @@ import java.net.Proxy
 class SetProxyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         ThemeUtils.darkMode(this)
 
         val setProxyActivityBinding = ActivitySetProxyBinding.inflate(layoutInflater)
@@ -35,7 +34,7 @@ class SetProxyActivity : AppCompatActivity() {
             Proxy.Type.SOCKS.name -> setProxyActivityBinding.rbSocks.isChecked = true
             Proxy.Type.HTTP.name -> setProxyActivityBinding.rbHttp.isChecked = true
 
-            // Else, set config to default.
+            // Else, set config to default. btw, socks 4 / 5 radio button is default selected.
             else -> sharePreferences.edit().putString("proxy_type", Proxy.Type.SOCKS.name).apply()
         }
 
@@ -95,6 +94,7 @@ class SetProxyActivity : AppCompatActivity() {
                 }
             })
         }
+
         // Save proxy config button.
         setProxyActivityBinding.mbSaveProxySetting.setOnClickListener {
             // Get input address, port, selected radio button.
@@ -107,6 +107,7 @@ class SetProxyActivity : AppCompatActivity() {
             saveProxySetting(inputAddress, inputPort, proxyType)
             Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show()
         }
+
         // Clean all proxy config.
         setProxyActivityBinding.mbCleanConfig.setOnClickListener {
             // Clean the saved proxy config.

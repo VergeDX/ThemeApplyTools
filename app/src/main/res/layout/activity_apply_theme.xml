@@ -11,11 +11,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="9dp"
-        android:drawableStart="@drawable/ic_info_outline_black_24dp"
         android:drawablePadding="7dp"
         android:text="@string/how_to_use"
         android:textSize="19sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_info_outline_black_24dp" />
 
     <TextView
         android:layout_width="match_parent"

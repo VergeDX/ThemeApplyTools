@@ -21,6 +21,20 @@ object ThemeUtils {
     private const val THEME_API_URL = "https://thm.market.xiaomi.com/thm/download/v2/"
 
     /**
+     * After apply theme, there is operate result.
+     */
+    enum class ApplyThemeResult {
+        // MIUI theme manager is not found.
+        NO_THEME_MANAGER,
+
+        // MIUI theme manager is disabled.
+        THEME_MANAGER_DISABLED,
+
+        // Sent intent to MIUI theme manager.
+        SENT_INTENT
+    }
+
+    /**
      * Apply a theme by send intent to system theme manager with theme file path.
      *
      * @param activity need to start activity.
@@ -29,18 +43,18 @@ object ThemeUtils {
      *         -2 if MIUI theme manager not enabled.
      *          0 if posted apply theme intent.
      */
-    fun applyTheme(activity: Activity, filePath: String?): Int {
+    fun applyTheme(activity: Activity, filePath: String?): ApplyThemeResult {
         // The information of MIUI theme manager. If not exist, return code -1.
         val themeManagerAppInfo: ApplicationInfo = try {
             @Suppress("SpellCheckingInspection")
             activity.packageManager.getApplicationInfo("com.android.thememanager", 0)
         } catch (e: PackageManager.NameNotFoundException) {
-            return -1
+            return ApplyThemeResult.NO_THEME_MANAGER
         }
 
         // If MIUI theme manager disabled, return code -2.
         if (!themeManagerAppInfo.enabled) {
-            return -2
+            return ApplyThemeResult.THEME_MANAGER_DISABLED
         }
 
         // Else, make intent and bundle to apply the theme.
@@ -59,7 +73,7 @@ object ThemeUtils {
         intent.putExtras(bundle)
         activity.startActivity(intent)
 
-        return 0
+        return ApplyThemeResult.SENT_INTENT
     }
 
     /**
@@ -112,9 +126,9 @@ object ThemeUtils {
             val themeFileHash: String
                 get() = if (fileHash.isEmpty()) "暂无" else fileHash.toUpperCase(Locale.ROOT)
 
-            // Unit is MB, and format %.2f theme file size.
-            val themeFileSize: String
-                get() = String.format("%.2f", fileSize / 10e5) + " MB"
+            // Unit is MB.
+            val themeFileSize: Double
+                get() = fileSize / 10e5
 
             // Decoded file name from theme download url.
             val themeFileName: String
@@ -130,11 +144,12 @@ object ThemeUtils {
      * @return MiuiThemeData, if apiCode is -1, return null.
      * @see MiuiTheme.apiCode
      */
-    fun parseThemeInfo(responseString: String): MiuiTheme.MiuiThemeData? {
+    fun parseThemeInfo(responseString: String): Optional<MiuiTheme.MiuiThemeData> {
         return try {
-            Json { allowStructuredMapKeys = true }.decodeFromString(MiuiTheme.serializer(), responseString).apiData
+            Optional.of(Json { allowStructuredMapKeys = true }
+                    .decodeFromString(MiuiTheme.serializer(), responseString).apiData)
         } catch (e: Exception) {
-            null
+            Optional.empty<MiuiTheme.MiuiThemeData>()
         }
     }
 
