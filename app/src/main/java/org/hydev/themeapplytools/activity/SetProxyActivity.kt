@@ -42,24 +42,33 @@ class SetProxyActivity : AppCompatActivity() {
         setProxyActivityBinding.mbTestProxy.setOnClickListener {
             // Get user selected proxy type, and input proxy address & port.
             val chosenProxyType = if (setProxyActivityBinding.rbSocks.isChecked) Proxy.Type.SOCKS else Proxy.Type.HTTP
+            // In layout, address only allow 0 - 9 and dot, port only allow 0 - 9.
             val inputAddress = setProxyActivityBinding.tilProxyAddress.editText?.text.toString()
-            val inputPort = setProxyActivityBinding.tilProxyPort.editText?.text.toString()
+            val inputPortString = setProxyActivityBinding.tilProxyPort.editText?.text.toString()
 
             // Input address or port is empty.
-            if (inputAddress.isEmpty() || inputPort.isEmpty()) {
+            if (inputAddress.isEmpty() || inputPortString.isEmpty()) {
                 Toast.makeText(this, "未输入完整的代理信息", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
+
             // Input not ip address.
             if (!Patterns.IP_ADDRESS.matcher(inputAddress).matches()) {
                 Toast.makeText(this, "输入的地址不是 ip！", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
+            val inputPort = inputPortString.toInt()
+            // port not in range.
+            if (inputPort < 0 || inputPort > 0xFFFF) {
+                Toast.makeText(this, "端口范围有误！", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             // Normal condition, test proxy.
             // Build client and request, request url can return ip address.
             val okHttpClient = OkHttpClient.Builder()
-                    .proxy(Proxy(chosenProxyType, InetSocketAddress(inputAddress, inputPort.toInt()))).build()
+                    .proxy(Proxy(chosenProxyType, InetSocketAddress(inputAddress, inputPort))).build()
             val request = Request.Builder().url("http://api.ip.sb/ip").build()
 
             // Show dialog and post request.
@@ -111,7 +120,7 @@ class SetProxyActivity : AppCompatActivity() {
         // Clean all proxy config.
         setProxyActivityBinding.mbCleanConfig.setOnClickListener {
             // Clean the saved proxy config.
-            saveProxySetting("", "", null)
+            saveProxySetting("", "", Proxy.Type.DIRECT)
 
             // Clean the input proxy config.
             setProxyActivityBinding.tilProxyAddress.editText?.setText("")
@@ -127,12 +136,11 @@ class SetProxyActivity : AppCompatActivity() {
      *
      * @see Proxy.Type
      */
-    private fun saveProxySetting(address: String, port: String, type: Proxy.Type?) {
+    private fun saveProxySetting(address: String, port: String, type: Proxy.Type) {
         val sharePreferences: SharedPreferences = getSharedPreferences("proxy_config", Context.MODE_PRIVATE)
-        val typeString = type?.name ?: ""
 
         sharePreferences.edit().putString("proxy_address", address).apply()
         sharePreferences.edit().putString("proxy_port", port).apply()
-        sharePreferences.edit().putString("proxy_type", typeString).apply()
+        sharePreferences.edit().putString("proxy_type", type.name).apply()
     }
 }
