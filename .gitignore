@@ -94,3 +94,6 @@ lint/tmp/
 # Build
 app/debug
 app/release
+
+# macOS
+.DS_Store
