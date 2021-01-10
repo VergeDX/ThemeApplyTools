@@ -14,8 +14,8 @@ android {
         applicationId "org.hydev.new.themeapplytools"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 26
-        versionName '2.7.0'
+        versionCode 27
+        versionName '2.7.1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
