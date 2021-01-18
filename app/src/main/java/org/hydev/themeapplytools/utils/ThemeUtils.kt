@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import okhttp3.Callback
@@ -165,7 +166,8 @@ object ThemeUtils {
 
         // If not in the dark mode, set status bar color to black.
         if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
-            // TODO: 20-8-2 Fix this.
+            // https://stackoverflow.com/questions/62577645/android-view-view-systemuivisibility-deprecated-what-is-the-replacement
+            // activity.window.setDecorFitsSystemWindows(false)
             activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
     }
